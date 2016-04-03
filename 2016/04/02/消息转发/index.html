@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>消息转发 | CodeCode</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="CodeCode">
+
+  
+  
+  
+
+  
+</head>
+
+
+<body class="post-template">
+
+  <header class="site-head"  style="background-image: url(http://7xrcp9.com1.z0.glb.clouddn.com/blog123.png?imageView2/1/w/1000/h/300)" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="http://7xrcp9.com1.z0.glb.clouddn.com/blogheadimg.png" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">CodeCode</h1>
+            <h2 class="blog-description"></h2>
+        </div>
+    </div>
+</header>
+  
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2016-04-02T02:22:04.000Z" itemprop="datePublished">
+          2016-04-02
+      </time>
+    
+</span>
+    <h1 class="post-title">消息转发</h1>
+    <section class="post-content">
+      <p>对于“消息转发”这个词，我并不想解释什么。直接用下面的error来说话吧：<br><code>-[__NSCFConstantString objectForKey:]: unrecognized selector sent to instance 0x1050a6be8</code><br><code>-[__NSCFNumber isEqualToString:]: unrecognized selector sent to instance 0xb0000000000007b2</code><br>上面的crash日志，肯定都不会陌生吧，其实他就是由NSObject的<code>doesNotRecognizeSelector:</code>方法抛出的，说明消息的接收者无法响应该方法，从而转发给NSObject类来处理<br>其实消息的转发可以分别三大阶段：<br><code>第一阶段</code> 先征询消息接收者所属的类，看其是否能动态添加方法，以处理当前这个无法响应的 selector，这叫做 动态方法解析（dynamic method resolution）。如果运行期系统（runtime system） 第一阶段执行结束，接收者就无法再以动态新增方法的手段来响应消息，进入第二阶段。<br><code>第二阶段</code> 看看有没有其他对象（备援接收者，replacement receiver）能处理此消息。如果有，运行期系统会把消息转发给那个对象，转发过程结束；如果没有，则启动完整的消息转发机制。<br><code>第三阶段</code> 完整的消息转发机制。运行期系统会把与消息有关的全部细节都封装到 NSInvocation 对象中，再给接收者最后一次机会，令其设法解决当前还未处理的消息。<br>就三个阶段分别对应的就是下图</p>
+<p><img src="http://7xrcp9.com1.z0.glb.clouddn.com/blogimage_note64270_1.png?imageView2/2/w/600/q/75" alt="消息传递"></p>
+<p>而文字一开始提到的那些crash日志，都是因为在<code>forwardInvocation:</code>中没有找到可以重定向的方法所以被转到了<code>doesNotRecognizeSelector:</code>方法中crash了。<br>那么到底是如何才会进行确定可以重定向的呢，这里需要介绍一个方法<code>methodSignatureForSelector:</code>这个方法是返回一个有效的方法签名。而可以理解为它和<code>forwardInvocation:</code>这个方法成对出现的。想要响应<code>forwardInvocation:</code>这个方法则必须要实现<code>methodSignatureForSelector:</code>。如果在<code>methodSignatureForSelector:</code>这个方法重的方法前面返回空了这时候就会进入<code>doesNotRecognizeSelector:</code>方法，也就是说没有找到可以重定向的方法了（无法进行进一步的处理）。<br>换个角度叫也就是说如果只要有方法签名返回，也就是可以避免crash了。下面这段前面的代码就可以为一些没有前面的方法自动创建一个签名。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-(<span class="built_in">NSMethodSignature</span> *)methodSignatureForSelector:(SEL)selector</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSMethodSignature</span> *sig = [[<span class="keyword">self</span> class] instanceMethodSignatureForSelector:selector];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!sig) &#123;</span><br><span class="line">        <span class="built_in">NSString</span> *sel = <span class="built_in">NSStringFromSelector</span>(selector);</span><br><span class="line">        <span class="built_in">NSString</span> *errorStr = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@ 的 %@ 方法 会造成闪退。请注意~~~~~"</span>,[<span class="keyword">self</span> class],sel];</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,errorStr);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> ([sel rangeOfString:<span class="string">@"set"</span>].location == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> [<span class="built_in">NSMethodSignature</span> signatureWithObjCTypes:<span class="string">"v@:@"</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> [<span class="built_in">NSMethodSignature</span> signatureWithObjCTypes:<span class="string">"@@:"</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> sig;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以自己写一个继承NSOject的类，然后加入关于方法前面的处理，就可以一定程序上避免文章开头的那种闪退。当然这个只是只是伪造了一个签名，更加优雅的是你可以在 <code>forwardInvocation:</code>方法中在根据自己特殊的签名，做一定的逻辑处理。<br>不过这里我要提醒的一点是：之前我直接弄了一个NSObject的扩展类，实现了<code>methodSignatureForSelector:</code>和<code>forwardInvocation:</code>方法。但是这样如果对于一些NSObject的子类如果实现了该方法的，是没有用的。比如说coredata的<code>NSManagedObject</code>访问他的对象的时候就是消息转发机制，重写了这些方法。所以我们自己写的方法对其不奏效。当然肯定还有很多类是有这种情况的。因此我觉得就算要用消息转发机制来避免一些方法找不到的闪退问题，我也觉得还是用在自己实现的类上面比较保险，不然有可能会出现各种奇葩问题。</p>
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>YYDD</h4>
+    <p>A person who is moving on...</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://youwebsite.com/2016/04/02/消息转发/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://youwebsite.com/2016/04/02/消息转发/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://youwebsite.com/2016/04/02/消息转发/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+</nav>
+  <div id="comment" class="comments-area">
+    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
+
+    
+</div>
+</main>
+
+
+  
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">CodeCode</a> &copy; 2016 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
+
+
+
+
+
+</body>
+</html>
