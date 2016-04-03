@@ -68,4 +68,4 @@ theme: casper
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:https://github.com/YYDD/codecodeblog.git
-  type:github
+  type:git
