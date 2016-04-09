@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>ios的mock | CodeCode</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="CodeCode">
+
+  
+  
+  
+
+  
+</head>
+
+
+<body class="post-template">
+
+  <header class="site-head"  style="background-image: url(http://7xrcp9.com1.z0.glb.clouddn.com/blog123.png?imageView2/1/w/1000/h/300)" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="http://7xrcp9.com1.z0.glb.clouddn.com/blogheadimg.png" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">CodeCode</h1>
+            <h2 class="blog-description"></h2>
+        </div>
+    </div>
+</header>
+  
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2016-04-09T08:01:39.000Z" itemprop="datePublished">
+          2016-04-09
+      </time>
+    
+</span>
+    <h1 class="post-title">ios的mock</h1>
+    <section class="post-content">
+      <p>因为单元测试的缘故，在测试项目中接入了“OCMock”,觉得它的实现很有意思。所以就看了部分“OCMock”的源码。在mock的时候大部分用到的还是运行时的一些特性。之后觉得蛮好玩的，就根据OCMock的大致思路，自己写了一个小小的mock的类。<br>那么先来介绍一下什么是mock吧。<br>mock可以理解为纸老虎。当我们写单元测试的时候，不可避免的要去尽可能少的实例化一些具体的组件来保持测试既短又快。而且保持单元的隔离。在现代的面向对象系统中，测试的组件很可能会有几个依赖的对象。我们用mock来替代实例化具体的依赖class。mock是在测试中的一个伪造的有预定义行为的具体对象的替身对象。被测试的组件不知道其中的差异！你的组件是在一个更大的系统中被设计的，你可以很有信心的用mock来测试你的组件。<br>通过上面的文字其实已经能够说明，mock需要做的事情。一就是吧原有的类被一个mock的类替换掉，再者就是对于该类的方法，进行伪造。<br>在参考了OCMock的源码之后，发现需要完成这些操作，需要借鉴的主要是运行时的以下方法：<br><code>object_setClass(&lt;#id obj#&gt;, &lt;#__unsafe_unretained Class cls#&gt;)</code><br>这个方法将一个对象设置为别的类,而返回值仍旧是返回原来的类别，具体看下下面的这段代码吧</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *str = <span class="string">@"hello"</span>;</span><br><span class="line">Class class1 = object_setClass(str, [<span class="built_in">UIButton</span> class]);</span><br></pre></td></tr></table></figure>
+<p>在这段代码中实则的作用是将str从NSString类别转化为UIButton类别。而object_setClass的返回值class1还是NSString类别的。<br>这个方法看似很强大，实际上我认为没有多大的用处，我唯一能够想到的是在子类和父类的转化的时候估计可以用到一下。其他的倒还真是没有想到哪里可以用。<br>有了上面的这个方法，那么mock一个类可以轻轻松松的搞定了，当然mock一个类还远远不够，当然还需要mock这个类中的方法。对于mock一个类中的方法，主要用到的是消息转发的思想。在mock类中，执行之前没有的方法，那么重定向到一个已经存在的方法，通过一定的trick返回mock得到的值。这样就实现了整个mock的思路。<br>下面这段主要是在消息转发时候如何处理重定向到一个已经存在的方法：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)forwardInvocation:(<span class="built_in">NSInvocation</span> *)anInvocation</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">BOOL</span> hasMoc = <span class="literal">NO</span>;</span><br><span class="line">    SEL selector = anInvocation.selector;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSString</span> *selectorName = <span class="built_in">NSStringFromSelector</span>(selector);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">NSString</span> *mocSelectorName <span class="keyword">in</span> <span class="keyword">self</span>.mocSelNameLists) &#123;</span><br><span class="line">        <span class="keyword">if</span> ([mocSelectorName isEqualToString:selectorName]) &#123;</span><br><span class="line">            anInvocation.selector = <span class="keyword">@selector</span>(getValueInMocMethod:);</span><br><span class="line">            [anInvocation setArgument:&amp;mocSelectorName atIndex:<span class="number">2</span>];</span><br><span class="line">            [anInvocation invokeWithTarget:<span class="keyword">self</span>];</span><br><span class="line"></span><br><span class="line">            hasMoc = <span class="literal">YES</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (!hasMoc) &#123;</span><br><span class="line">        [<span class="keyword">super</span> forwardInvocation:anInvocation];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中先对需要方法进行筛选，如果是mock的方法，那么对其进行重定向。因为是需要重定向到一个新的方法，那么所以需要改变<code>NSInvocation</code>类中的部分属性，主要是指向的方法和传递参数。这里需要注意的是<code>[anInvocation setArgument:&amp;mocSelectorName atIndex:2];</code>这边的index必须从2开始，因为0和1分别被targe和selector占用了。<br>以上介绍的就是mock的主要的思路处的实现了。虽然自己完成了一个mock的小demo，但是mock这个好像除了在测试的时候能够派上用场，在其他地方还想也没什么用武之地了。或者说只是我现在暂时还没有碰到或者想到而已。<br>不过虽然这么说，但是在研究mock的过程中，对于oc在运行时能够做的事情，有了更深一步的了解。<br>下面是自己写的demo的git地址：<br><a href="https://github.com/YYDD/MockDemo" target="_blank" rel="external">https://github.com/YYDD/MockDemo</a></p>
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>YYDD</h4>
+    <p>A person who is moving on...</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://YYDD.github.io/2016/04/09/ios的mock/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://YYDD.github.io/2016/04/09/ios的mock/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://YYDD.github.io/2016/04/09/ios的mock/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2016/04/02/消息转发/">
+        消息转发 →
+    </a>
+    
+</nav>
+  <div id="comment" class="comments-area">
+    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
+
+    
+</div>
+</main>
+
+
+  
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">CodeCode</a> &copy; 2016 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
+
+
+
+
+
+</body>
+</html>
