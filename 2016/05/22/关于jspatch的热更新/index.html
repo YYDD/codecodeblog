@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>关于jspatch的热更新 | CodeCode</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="CodeCode">
+
+  
+  
+  
+
+  
+</head>
+
+
+<body class="post-template">
+
+  <header class="site-head"  style="background-image: url(http://7xrcp9.com1.z0.glb.clouddn.com/blog123.png?imageView2/1/w/1000/h/300)" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="http://7xrcp9.com1.z0.glb.clouddn.com/blogheadimg.png" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">CodeCode</h1>
+            <h2 class="blog-description"></h2>
+        </div>
+    </div>
+</header>
+  
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2016-05-22T07:02:48.000Z" itemprop="datePublished">
+          2016-05-22
+      </time>
+    
+</span>
+    <h1 class="post-title">关于jspatch的热更新</h1>
+    <section class="post-content">
+      <p>jsPatch（<a href="https://github.com/bang590/JSPatch）可以说是被苹果的审核所认可的一种热更新的方式，而集成起来也比较简单。主要思路还是将oc的代码转化为js的。然后在允许的时候动态检测是否该方法是否被热更新内的所替换，如果是的话就直接用js那边的逻辑。" target="_blank" rel="external">https://github.com/bang590/JSPatch）可以说是被苹果的审核所认可的一种热更新的方式，而集成起来也比较简单。主要思路还是将oc的代码转化为js的。然后在允许的时候动态检测是否该方法是否被热更新内的所替换，如果是的话就直接用js那边的逻辑。</a></p>
+<p>今天我主要想说的是关于热更新的时候，如何写热更新的js的代码。当然jsPatch官方也提供了一个直接oc代码转化为js代码的转化器JSPatchConvertor(<a href="http://bang590.github.io/JSPatchConvertor/)。这使得js小白在使用热更新的时候不用愁眉苦脸。不过不要高兴的太早，因为使用JSPatchConvertor出来的js的代码，基本上是不可用的，所以就需要不断的调试。不过我觉得在进行代码转化之前需要知道的是：哪些可以转，哪些不可以转。在JSPatchConvertor的最下面有这样两个描述，我觉得了解下是很有必要的。" target="_blank" rel="external">http://bang590.github.io/JSPatchConvertor/)。这使得js小白在使用热更新的时候不用愁眉苦脸。不过不要高兴的太早，因为使用JSPatchConvertor出来的js的代码，基本上是不可用的，所以就需要不断的调试。不过我觉得在进行代码转化之前需要知道的是：哪些可以转，哪些不可以转。在JSPatchConvertor的最下面有这样两个描述，我觉得了解下是很有必要的。</a> </p>
+<p><img src="http://7xrcp9.com1.z0.glb.clouddn.com/blogblog0522.png?imageView2/2/w/800/q/75" alt="截图"></p>
+<p>看了上面的图中的介绍，就很明了了。如果需要热更新的方法中有unsupported里面的方法或者类，那么其实可以说，放弃热更新吧。因此从这个上也可以看出，如果你的项目中需要支持热更新的，那么最好把每个方法尽可能的分解开来，保证每个方法做单一的一件事情。这样不仅方便与热更新，而且在代码结构上也更加的清晰、明了。<br>下面我就来说几点我在利用jspatch热更新写js代码的时候遇到的问题或者说需要注意的点吧：</p>
+<p>1、需要在js中把你更新的这个类中的所有用到的类都要列出来，如：<code>require(&#39;NSArray&#39;);</code>、<code>require(&#39;HelloObject&#39;);</code>。</p>
+<p>2、请使用标准的创建或者赋值方式。其实这句话不知道该不该这么表达，看下面的例子吧。如：获取一个字典中的值，在选择用oc代码转js的时候，请选用<code>[dict objectForKey:@&quot;key&quot;];</code>这种方式，而不要使用<code>dict[@&quot;key&quot;]</code>这样直接的方式。</p>
+<p>好吧，暂时也就只有这两点。因为虽然热更新，很需要。但是毕竟用到热更新的次数真的是少之又少。而且这种东西，当然是能不用就不用咯，毕竟用上了热更新就意味着有bug。</p>
+<p>jsPatch真心算是一个不错的热更新的框架，但是我觉得如果jsPatch能够加上对于资源的更新，那么久更加完美了。因为在之前的项目中，就是有出现过资源图片不正确，想要做替换的情况，但是发现因为图片是在本地打包的资源，所以并没有办法做到实时的更新。所以希望jsPatch能够把图片的更新也加上去。不过也许加上图片的更新就不能单单只叫做jsPatch了吧~~</p>
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>YYDD</h4>
+    <p>A person who is moving on...</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://YYDD.github.io/2016/05/22/关于jspatch的热更新/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://YYDD.github.io/2016/05/22/关于jspatch的热更新/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://YYDD.github.io/2016/05/22/关于jspatch的热更新/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2016/05/07/ios的widget的总结/">
+        ios的widget的总结 →
+    </a>
+    
+</nav>
+  <div id="comment" class="comments-area">
+    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
+
+    
+</div>
+</main>
+
+
+  
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">CodeCode</a> &copy; 2016 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
+
+
+
+
+
+</body>
+</html>
