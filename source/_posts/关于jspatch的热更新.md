@@ -3,9 +3,9 @@ title: 关于jspatch的热更新
 date: 2016-05-22 15:02:48
 tags:
 ---
-jsPatch（https://github.com/bang590/JSPatch）可以说是被苹果的审核所认可的一种热更新的方式，而集成起来也比较简单。主要思路还是将oc的代码转化为js的。然后在允许的时候动态检测是否该方法是否被热更新内的所替换，如果是的话就直接用js那边的逻辑。
+jsPatch（ https://github.com/bang590/JSPatch ）可以说是被苹果的审核所认可的一种热更新的方式，而集成起来也比较简单。主要思路还是将oc的代码转化为js的。然后在允许的时候动态检测是否该方法是否被热更新内的所替换，如果是的话就直接用js那边的逻辑。
 
-今天我主要想说的是关于热更新的时候，如何写热更新的js的代码。当然jsPatch官方也提供了一个直接oc代码转化为js代码的转化器JSPatchConvertor(http://bang590.github.io/JSPatchConvertor/)。这使得js小白在使用热更新的时候不用愁眉苦脸。不过不要高兴的太早，因为使用JSPatchConvertor出来的js的代码，基本上是不可用的，所以就需要不断的调试。不过我觉得在进行代码转化之前需要知道的是：哪些可以转，哪些不可以转。在JSPatchConvertor的最下面有这样两个描述，我觉得了解下是很有必要的。 
+今天我主要想说的是关于热更新的时候，如何写热更新的js的代码。当然jsPatch官方也提供了一个直接oc代码转化为js代码的转化器JSPatchConvertor( http://bang590.github.io/JSPatchConvertor )。这使得js小白在使用热更新的时候不用愁眉苦脸。不过不要高兴的太早，因为使用JSPatchConvertor出来的js的代码，基本上是不可用的，所以就需要不断的调试。不过我觉得在进行代码转化之前需要知道的是：哪些可以转，哪些不可以转。在JSPatchConvertor的最下面有这样两个描述，我觉得了解下是很有必要的。 
 
 ![截图](http://7xrcp9.com1.z0.glb.clouddn.com/blogblog0522.png?imageView2/2/w/800/q/75)
 
