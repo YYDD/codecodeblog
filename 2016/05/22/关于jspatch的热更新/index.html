@@ -46,8 +46,8 @@
 </span>
     <h1 class="post-title">关于jspatch的热更新</h1>
     <section class="post-content">
-      <p>jsPatch（<a href="https://github.com/bang590/JSPatch）可以说是被苹果的审核所认可的一种热更新的方式，而集成起来也比较简单。主要思路还是将oc的代码转化为js的。然后在允许的时候动态检测是否该方法是否被热更新内的所替换，如果是的话就直接用js那边的逻辑。" target="_blank" rel="external">https://github.com/bang590/JSPatch）可以说是被苹果的审核所认可的一种热更新的方式，而集成起来也比较简单。主要思路还是将oc的代码转化为js的。然后在允许的时候动态检测是否该方法是否被热更新内的所替换，如果是的话就直接用js那边的逻辑。</a></p>
-<p>今天我主要想说的是关于热更新的时候，如何写热更新的js的代码。当然jsPatch官方也提供了一个直接oc代码转化为js代码的转化器JSPatchConvertor(<a href="http://bang590.github.io/JSPatchConvertor/)。这使得js小白在使用热更新的时候不用愁眉苦脸。不过不要高兴的太早，因为使用JSPatchConvertor出来的js的代码，基本上是不可用的，所以就需要不断的调试。不过我觉得在进行代码转化之前需要知道的是：哪些可以转，哪些不可以转。在JSPatchConvertor的最下面有这样两个描述，我觉得了解下是很有必要的。" target="_blank" rel="external">http://bang590.github.io/JSPatchConvertor/)。这使得js小白在使用热更新的时候不用愁眉苦脸。不过不要高兴的太早，因为使用JSPatchConvertor出来的js的代码，基本上是不可用的，所以就需要不断的调试。不过我觉得在进行代码转化之前需要知道的是：哪些可以转，哪些不可以转。在JSPatchConvertor的最下面有这样两个描述，我觉得了解下是很有必要的。</a> </p>
+      <p>jsPatch（ <a href="https://github.com/bang590/JSPatch" target="_blank" rel="external">https://github.com/bang590/JSPatch</a> ）可以说是被苹果的审核所认可的一种热更新的方式，而集成起来也比较简单。主要思路还是将oc的代码转化为js的。然后在允许的时候动态检测是否该方法是否被热更新内的所替换，如果是的话就直接用js那边的逻辑。</p>
+<p>今天我主要想说的是关于热更新的时候，如何写热更新的js的代码。当然jsPatch官方也提供了一个直接oc代码转化为js代码的转化器JSPatchConvertor( <a href="http://bang590.github.io/JSPatchConvertor" target="_blank" rel="external">http://bang590.github.io/JSPatchConvertor</a> )。这使得js小白在使用热更新的时候不用愁眉苦脸。不过不要高兴的太早，因为使用JSPatchConvertor出来的js的代码，基本上是不可用的，所以就需要不断的调试。不过我觉得在进行代码转化之前需要知道的是：哪些可以转，哪些不可以转。在JSPatchConvertor的最下面有这样两个描述，我觉得了解下是很有必要的。 </p>
 <p><img src="http://7xrcp9.com1.z0.glb.clouddn.com/blogblog0522.png?imageView2/2/w/800/q/75" alt="截图"></p>
 <p>看了上面的图中的介绍，就很明了了。如果需要热更新的方法中有unsupported里面的方法或者类，那么其实可以说，放弃热更新吧。因此从这个上也可以看出，如果你的项目中需要支持热更新的，那么最好把每个方法尽可能的分解开来，保证每个方法做单一的一件事情。这样不仅方便与热更新，而且在代码结构上也更加的清晰、明了。<br>下面我就来说几点我在利用jspatch热更新写js代码的时候遇到的问题或者说需要注意的点吧：</p>
 <p>1、需要在js中把你更新的这个类中的所有用到的类都要列出来，如：<code>require(&#39;NSArray&#39;);</code>、<code>require(&#39;HelloObject&#39;);</code>。</p>
