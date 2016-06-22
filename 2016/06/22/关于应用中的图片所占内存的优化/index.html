@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>关于应用中的图片所占内存的优化 | CodeCode</title>
+  <meta name="description" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
+
+  <meta name="generator" content="CodeCode">
+
+  
+  
+  
+
+  
+</head>
+
+
+<body class="post-template">
+
+  <header class="site-head"  style="background-image: url(http://7xrcp9.com1.z0.glb.clouddn.com/blog123.png?imageView2/1/w/1000/h/300)" >
+    <div class="vertical">
+        <div class="site-head-content inner">
+             <a class="blog-logo" href="/"><img src="http://7xrcp9.com1.z0.glb.clouddn.com/blogheadimg.png" alt="Blog Logo"/></a> 
+            <h1 class="blog-title">CodeCode</h1>
+            <h2 class="blog-description"></h2>
+        </div>
+    </div>
+</header>
+  
+
+<main class="content" role="main">
+  <article class="post">
+    <span class="post-meta">
+      <time datetime="2016-06-22T06:23:03.000Z" itemprop="datePublished">
+          2016-06-22
+      </time>
+    
+</span>
+    <h1 class="post-title">关于应用中的图片所占内存的优化</h1>
+    <section class="post-content">
+      <p>图片，相信每款app中都有，而且不会少。<br>一个app，所占的内存，图片资源所占去的比例肯定不会小。相信很多同学在加载本地图片资源的时候有时候会不管三七二十一 <code>[UIImage imageNamed:(nonnull NSString *)]</code> 直接是用这个方法来加载图片资源。确实这个方法是比较简单且快速的加载资源的方法。但是大家应该都知道除了<code>[UIImage imageNamed:(nonnull NSString *)]</code>这个方法外，加载图片资源还有另外一个方法。对!就是 <code>[UIImage imageWithContentsOfFile:(nonnull NSString *)]</code>这个方法。那么这两者的区别到底是什么呢？<code>[UIImage imageWithContentsOfFile:(nonnull NSString *)]</code>这个方法加载图片，图片所占的内存不会一直保留着。而<code>[UIImage imageNamed:(nonnull NSString *)]</code>这个方法加载图片，内存会一直保留着，除非手动清除，或者说是app销毁。当然对于一直在内存中的图片，因为不需要进行磁盘的读写，在加载的时候速度肯定是要比从磁盘中读写的图片快很多。<br>那么这两个方法分别在什么情况下使用呢？比较官方的说法就是，如果图片比较大，而且图片出现的频次不高的话，应该用<code>[UIImage imageWithContentsOfFile:(nonnull NSString *)]</code>，因为出现的次数少，就没必要一直在内存中，直接从磁盘中加载下就可以了。那么对应的具体情况呢，相对来说，一般的登录页面的图片资源，一些帮助页面的资源等这些相对来说出现的次数比较少，可以考虑用不会持续占着内存的加载方式。</p>
+<p>其实这个并不是我想说的重点，因为本地图片资源的优化，其实并不能够减少多少的内存，相信设计师们也不会给出很大的图片资源。那么，下面重头戏来了~~~<br>这个是在之前的项目中总结出来的，因为是针对单个app做的优化，所以不可否认存在一定的局限性。<br>之前我们做的一款论坛类的app。在app中主要的组成是“帖子”。而在帖子的内容中会出现大量的图片。一个帖子内十几二十张图片是很正常的,而且每张图片的大小大概会在50kb左右。<code>SDWebImage</code>这个图片的第三方库相信大家都知道。恩，我们用的图片加载的库就是它~在他的介绍中有这样一句话”An asynchronous memory + disk image caching with automatic cache expiration handling.”所以也就是说我在app中打开过查看过多少图片，所有的图片都会在内存中，如果浏览的越多，那么app所占的内存就会越大。当时就想着千万不能让内存这样无止境的涨下去。所以需要做的就是清除内存中部分图片的内存。<br>于是乎我就疯狂的在<code>SDWebImage</code>的库里面穿梭，寻找解决的方法，开始想着是和cache一样，是否可以设置一个最大的内存值，或者说限制缓存多少尺寸以内的图片。结果一不小心被我找到了<code>SDImageCache</code>这个类，里面有这样一个属性（如下图所示）<br><img src="http://7xrcp9.com1.z0.glb.clouddn.com/blogblogQQ20160622-0%402x.png?imageView2/2/w/600/q/75" alt="截图"></p>
+<p>红色框框起来的这个属性，心想着太棒了居然真有可以设置最大内存值。但是设置完之后发现压根儿就没用。开始我以为是我设置的姿势不对，换了各种姿势尝试了一遍，发现还是没有用。没办法，只能去他的实现文件里面看个究竟。然而我惊奇的发现，对于<code>maxMemoryCost</code>这个属性，只是set了一下，然后就没有然后了，其他没有地方用到它的。当时我就懵x了。但是还是不放弃，继续搜寻，找到了下面这几个方法<br><img src="http://7xrcp9.com1.z0.glb.clouddn.com/blogblogQQ20160622-3%402x.png?imageView2/2/w/600/q/75" alt="截图"><br>从注释上看，这几个方法都可以清理内存中的图片。不过有些方法有“副作用”，比如<code>- (void)removeImageForKey:(NSString *)key</code>这个方法就如他备注里说的会一并把磁盘中的也清除掉。这种情况肯定是不想要的，用这个第三方库的主要目的就是为了做图片缓存。又比如<code>- (void)clearMemory</code>这个方法，只能清除所有内存中的图片。往往这个实际情况是有出入的。而我希望的是清除部分的图片。所以最后选择的方法是:<code>- (void)removeImageForKey:(NSString *)key fromDisk:(BOOL)fromDisk</code> 其中fromDisk=NO。这样就能做到清除一些比较大的出现次数比较少的图片了。<br>最后我在讲一下具体是怎么优化的。对于论坛类的app，主要有所有的帖子列表页和单个帖子的详细内容展示页。因为可以理解为用户操作是会频繁的浏览列表页，但是对于同一个帖子的详细内容页不会频繁的进出。在这样的前提下，我就可以认为帖子详细页里面的图片内存我是不需要的，只要缓存在磁盘中就可以了，而列表页因为需要频繁的访问，所以需要一直留在内存中。基于这个情况下，当进入单个帖子的详细内容展示页的时候开始记录所有加载的图片，当离开详细页的时候（或者说该页面被销毁的时候），结束加载的图片的记录，并且把记录下来的图片从内存中移除掉。在实际运用的过程中，发现确实是可行的~<br>以上就是在之前的项目中优化的时候，对于图片所占内存这一块所作的优化，也许这个方法局限性很大，但是思路是可取的，恩！可取的=，=</p>
+
+    </section>
+    <footer class="post-footer">
+      <section class="author">
+    <h4>YYDD</h4>
+    <p>A person who is moving on...</p>
+</section>
+      <section class="share">
+    <h4>Share this post</h4>
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://yydd.space/2016/06/22/关于应用中的图片所占内存的优化/"
+       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+        <span class="hidden">Twitter</span>
+    </a>
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yydd.space/2016/06/22/关于应用中的图片所占内存的优化/"
+       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+        <span class="hidden">Facebook</span>
+    </a>
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yydd.space/2016/06/22/关于应用中的图片所占内存的优化/"
+       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+        <span class="hidden">Google+</span>
+    </a>
+</section>
+    </footer>
+  </article>
+  <nav class="pagination" role="pagination">
+    
+    <span class="page-number">•</span>
+    
+    <a class="older-posts" href="/2016/05/22/关于jspatch的热更新/">
+        关于jspatch的热更新 →
+    </a>
+    
+</nav>
+  <div id="comment" class="comments-area">
+    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
+
+    
+</div>
+</main>
+
+
+  
+<footer class="site-footer">
+  
+  <div class="inner">
+     <section class="copyright">All content copyright <a href="/">CodeCode</a> &copy; 2014 &bull; All rights reserved.</section>
+     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+  </div>
+</footer>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+
+
+
+
+
+
+</body>
+</html>
