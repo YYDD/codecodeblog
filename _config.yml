@@ -69,5 +69,5 @@ theme: hexo-theme-casper
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/YYDD/codecodeblog.git
+  repo: https://github.com/YYDD/yydd.github.io.git
   branch: master
