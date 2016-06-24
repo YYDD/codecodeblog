@@ -1,5 +1,5 @@
 ---
-title: ios的widget的总结
+title: iOS的widget的总结
 date: 2016-05-07 16:05
 ---
 前段时间在研究ios中的widget的实现。发现其中有不少的坑~现在widget的开发也告一段落了。那么把这些widget的坑拿出来分享下吧~
