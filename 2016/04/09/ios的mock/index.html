@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-  <title>ios的mock | CodeCode</title>
+  <title>iOS的mock | CodeCode</title>
   <meta name="description" content="" />
   <meta name="HandheldFriendly" content="True" />
   <meta name="MobileOptimized" content="320" />
@@ -44,7 +44,7 @@
       </time>
     
 </span>
-    <h1 class="post-title">ios的mock</h1>
+    <h1 class="post-title">iOS的mock</h1>
     <section class="post-content">
       <p>因为单元测试的缘故，在测试项目中接入了“OCMock”,觉得它的实现很有意思。所以就看了部分“OCMock”的源码。在mock的时候大部分用到的还是运行时的一些特性。之后觉得蛮好玩的，就根据OCMock的大致思路，自己写了一个小小的mock的类。<br>那么先来介绍一下什么是mock吧。<br>mock可以理解为纸老虎。当我们写单元测试的时候，不可避免的要去尽可能少的实例化一些具体的组件来保持测试既短又快。而且保持单元的隔离。在现代的面向对象系统中，测试的组件很可能会有几个依赖的对象。我们用mock来替代实例化具体的依赖class。mock是在测试中的一个伪造的有预定义行为的具体对象的替身对象。被测试的组件不知道其中的差异！你的组件是在一个更大的系统中被设计的，你可以很有信心的用mock来测试你的组件。<br>通过上面的文字其实已经能够说明，mock需要做的事情。一就是吧原有的类被一个mock的类替换掉，再者就是对于该类的方法，进行伪造。<br>在参考了OCMock的源码之后，发现需要完成这些操作，需要借鉴的主要是运行时的以下方法：<br><code>object_setClass(&lt;#id obj#&gt;, &lt;#__unsafe_unretained Class cls#&gt;)</code><br>这个方法将一个对象设置为别的类,而返回值仍旧是返回原来的类别，具体看下下面的这段代码吧</p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *str = <span class="string">@"hello"</span>;</span><br><span class="line">Class class1 = object_setClass(str, [<span class="built_in">UIButton</span> class]);</span><br></pre></td></tr></table></figure>
@@ -60,15 +60,15 @@
 </section>
       <section class="share">
     <h4>Share this post</h4>
-    <a class="icon-twitter" href="http://twitter.com/share?url=http://yydd.space/2016/04/09/ios的mock/"
+    <a class="icon-twitter" href="http://twitter.com/share?url=http://yydd.space/2016/04/09/iOS的mock/"
        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
         <span class="hidden">Twitter</span>
     </a>
-    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yydd.space/2016/04/09/ios的mock/"
+    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yydd.space/2016/04/09/iOS的mock/"
        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
         <span class="hidden">Facebook</span>
     </a>
-    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yydd.space/2016/04/09/ios的mock/"
+    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yydd.space/2016/04/09/iOS的mock/"
        onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
         <span class="hidden">Google+</span>
     </a>
