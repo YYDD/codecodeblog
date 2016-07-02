@@ -1,54 +1,212 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>iOS的widget的总结 | CodeCode</title>
-  <meta name="description" content="" />
-  <meta name="HandheldFriendly" content="True" />
-  <meta name="MobileOptimized" content="320" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
-  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
-
-  <meta name="generator" content="CodeCode">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前段时间在研究ios中的widget的实现。发现其中有不少的坑~现在widget的开发也告一段落了。那么把这些widget的坑拿出来分享下吧~
+首先来说下widget，该功能是从ios8开始的。在通知栏下拉下来的页面中有“今天”和“通知”两个tab，其中widget的内容都是在“今天”里面。之前我也没怎么关注过“今天”里面的内容。自从要在自己的app中加入widget之后，发现其实很多的app都带">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS的widget的总结">
+<meta property="og:url" content="http://yydd.space/2016/05/07/iOS的widget的总结/index.html">
+<meta property="og:site_name" content="CodeCode">
+<meta property="og:description" content="前段时间在研究ios中的widget的实现。发现其中有不少的坑~现在widget的开发也告一段落了。那么把这些widget的坑拿出来分享下吧~
+首先来说下widget，该功能是从ios8开始的。在通知栏下拉下来的页面中有“今天”和“通知”两个tab，其中widget的内容都是在“今天”里面。之前我也没怎么关注过“今天”里面的内容。自从要在自己的app中加入widget之后，发现其实很多的app都带">
+<meta property="og:updated_time" content="2016-07-02T02:31:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS的widget的总结">
+<meta name="twitter:description" content="前段时间在研究ios中的widget的实现。发现其中有不少的坑~现在widget的开发也告一段落了。那么把这些widget的坑拿出来分享下吧~
+首先来说下widget，该功能是从ios8开始的。在通知栏下拉下来的页面中有“今天”和“通知”两个tab，其中widget的内容都是在“今天”里面。之前我也没怎么关注过“今天”里面的内容。自从要在自己的app中加入widget之后，发现其实很多的app都带">
+  
+    <link rel="alternative" href="/atom.xml" title="CodeCode" type="application/atom+xml">
   
   
+    <link rel="icon" href="/favicon.png">
   
-
-  
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xrcp9.com1.z0.glb.clouddn.com/blogheadimg.jpg" class="js-avatar">
+			
+		</a>
 
-<body class="post-template">
+		<hgroup>
+		  <h1 class="header-author"><a href="/">YYDD</a></h1>
+		</hgroup>
 
-  <header class="site-head"  style="background-image: url(http://7xrcp9.com1.z0.glb.clouddn.com/blog123.png?imageView2/1/w/1000/h/300)" >
-    <div class="vertical">
-        <div class="site-head-content inner">
-             <a class="blog-logo" href="https://github.com/YYDD"><img src="http://7xrcp9.com1.z0.glb.clouddn.com/blogheadimg.png" alt="Blog Logo"/></a> 
-            <h1 class="blog-title">CodeCode</h1>
-            <h2 class="blog-description"></h2>
-        </div>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						
+						<li>About</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/YYDD" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/1875745691/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">一个弱弱的程序员=，=</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
     </div>
-</header>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">YYDD</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://7xrcp9.com1.z0.glb.clouddn.com/blogheadimg.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">YYDD</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/YYDD" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/1875745691/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-iOS的widget的总结" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/07/iOS的widget的总结/" class="article-date">
+  	<time datetime="2016-05-07T08:05:00.000Z" itemprop="datePublished">2016-05-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS的widget的总结
+    </h1>
   
 
-<main class="content" role="main">
-  <article class="post">
-    <span class="post-meta">
-      <time datetime="2016-05-07T08:05:00.000Z" itemprop="datePublished">
-          2016-05-07
-      </time>
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
     
-</span>
-    <h1 class="post-title">iOS的widget的总结</h1>
-    <section class="post-content">
-      <p>前段时间在研究ios中的widget的实现。发现其中有不少的坑~现在widget的开发也告一段落了。那么把这些widget的坑拿出来分享下吧~</p>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前段时间在研究ios中的widget的实现。发现其中有不少的坑~现在widget的开发也告一段落了。那么把这些widget的坑拿出来分享下吧~</p>
 <p>首先来说下widget，该功能是从ios8开始的。在通知栏下拉下来的页面中有“今天”和“通知”两个tab，其中widget的内容都是在“今天”里面。之前我也没怎么关注过“今天”里面的内容。自从要在自己的app中加入widget之后，发现其实很多的app都带有widget的功能，只不过大家不知道而已。比如微博，uc什么的都是有的，而且体验也还不赖。</p>
-<p>在ios8的介绍中，widget其实又叫today，它是归属于app Extension里面的一项。主要widget这个词比较通用，在其他的设备上也是有widget这个东东，如果说today不要说非ios开发，就算是ios开发，也会愣住。那么下面都直接用widget吧。至于如何创建widget以及widget的一些基本的开发，我这边就不说了。这个只要一谷歌就会有大批量的文章出现，而且不用纠结选取哪一篇，因为基本上都是一样的=，=。<br>ok，那么省略过中间的无数关于widget的基础开发的等等。下面我就说下我写这个的中心思想吧。也就是widget的多奇葩，以及那些一不小心就会坑死你的坑。（当然将下面的前提是，我认为看官们已经了解了接触过ios上的widget或者说已经着手开始做widget了）</p>
+<p>在ios8的介绍中，widget其实又叫today，它是归属于app Extension里面的一项。<a id="more"></a>主要widget这个词比较通用，在其他的设备上也是有widget这个东东，如果说today不要说非ios开发，就算是ios开发，也会愣住。那么下面都直接用widget吧。至于如何创建widget以及widget的一些基本的开发，我这边就不说了。这个只要一谷歌就会有大批量的文章出现，而且不用纠结选取哪一篇，因为基本上都是一样的=，=。<br>ok，那么省略过中间的无数关于widget的基础开发的等等。下面我就说下我写这个的中心思想吧。也就是widget的多奇葩，以及那些一不小心就会坑死你的坑。（当然将下面的前提是，我认为看官们已经了解了接触过ios上的widget或者说已经着手开始做widget了）</p>
 <p>首先说下关于调试方面的:调试widget还是比较蛋疼的，因为经常性的你不管测试单个的widget，还是整个应用，widget部分的内容经常会不更新，也许我上面那句话不是很好理解，就是说你虽然在widget那边写了先的逻辑，但是他执行的仍旧是你修改前的那份代码逻辑。所以很多时候需要做的就是“退到桌面，长按app删除，再来！”。而我自己在调试的时候，一般是会选择写测试数据，调试单个的widget，等全部ok之后，直接打release的包来看测试，然后一般我比较相信打log的测试方法，所以经常性的出问题了会打log。当然这也做的前提是widget部分的代码逻辑并不是很复杂。</p>
 <p>接下来要说的是关于widget处的ui以及交互上的问题：对于widget，官方是这么说的，一般用来呈现一些比较简单的，交互性不强的内容。但是对于官方的这个说法我只能“呵呵”。因为我们基本上对于这种东西，所用的思路都是和官方对着干的。大家想想app的启动页就可以了。所以呢，在widget上免不了会绑定各种点击事件。首先要说的是点击区域的问题。经过切身实际的体验发现，一般的按钮不过是图片的按钮，只靠图片大小的那么点点击区域肯定是不够的。所以我们需要扩大点击区域。恩！扩大点击区域设置<code>UIEdgeInsets</code>就可以了，这种方法在我们之前的开发中，屡试不爽，还特别的优雅。但是，发现在widget中并不管用。而且如果你创建一个控件，空设置他的frame，但是不设置里面的内容，或者背景色什么的，那么这个控件就算绑定了事件，也是响应不了的。具体的原因是什么，我没有深究。也许是widget这边的一个bug也许是人家故意设计的feature也说不定。不过，如果设置一张图的话，就算是透明的图，还是可以响应事件的。那么久有方法了，可以设置一张边上是透明的，中间有实际内容的图，就可以解决这个问题了。还有一点，其实和上面说的差不多，就是如果你在一个控件上加了手势判断，如果其中没有被内容（图片，文字）覆盖到的地方，就没方法响应。之前我看到有的博客说<code>-(void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event</code>可以用这个方法来响应，但是实际用了之后还是不行，也许可以用下一张透明的图来做估计是可行的，具体我是还没有实际运用，但是其实和上面所说的效果是一样的。</p>
 <p>再说一点是关于内存的：也许对于ios开发来说，对于内存这块的考虑，并不需要像安卓开发那么考虑的这么多，然而在widget这一块，却会让我们吃到苦头。具体关于widget的内存的分配什么的我是没有做过具体的研究，我只是通过了一个实际的案例发现的。再拿我之前的widget项目来说吧。由于我们的widget中需要加入图片。然后加载了一张200k+的图片，结果整个widget就奔溃了（当然我这边说的widget只是我们app对于的widget插件，并非是设备的整个widget系统），后来换了比较小的图，就没有发生过这样的问题。不过我有一点怀疑的是widget这边的内存，好像对于图片这块的管理或者说分配会比较紧，因为只有在使用大图片的时候才会出现这样的问题。</p>
@@ -57,68 +215,140 @@
 <p>好了，以上的就是我在开发widget的时候遇到的一些问题以及一些想法吧算是。个人感觉widget还是蛮有用的。虽然之前一直没有打开设备上的widget，但是研究之后发现，有时候还是蛮方便的。只不过有些app的widget做的实在是不管恭维，还是说之前提到过的那个跑循环获取ssid的那个好了。它到好是直接打log的，所以我能够在控制台看到，如果把log隐藏掉了，一时半会儿我还真是不知道他做了这么强盗的事情。会出现这种的原因我觉得有两点：一个是由于这个widget可以说和app是相对来说比较分离的，意思说你widget干什么事情不管我app，就算crash了也和我app没关系，所以就乱来，还有一点就是很多人不知道这个widget这个功能，所以开发人员就更加乱来了，抱着反正没人用的心态在那边瞎搞。所以导致。。。</p>
 <p>虽然ios上的widget的灵活度或者说可方法程度还不能和安卓的widget的相比较，但是我还是觉得这个widget还是很不错的，希望我能够有勇气打开更多app的widget~~~~</p>
 
-    </section>
-    <footer class="post-footer">
-      <section class="author">
-    <h4>YYDD</h4>
-    <p>A person who is moving on...</p>
-</section>
-      <section class="share">
-    <h4>Share this post</h4>
-    <a class="icon-twitter" href="http://twitter.com/share?url=http://yydd.space/2016/05/07/iOS的widget的总结/"
-       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-        <span class="hidden">Twitter</span>
-    </a>
-    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yydd.space/2016/05/07/iOS的widget的总结/"
-       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
-        <span class="hidden">Facebook</span>
-    </a>
-    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yydd.space/2016/05/07/iOS的widget的总结/"
-       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
-        <span class="hidden">Google+</span>
-    </a>
-</section>
-    </footer>
-  </article>
-  <nav class="pagination" role="pagination">
+      
+    </div>
     
-    <a class="newer-posts" href="/2016/05/22/关于jspatch的热更新/">
-        ← 关于jspatch的热更新
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/05/22/关于jspatch的热更新/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          关于jspatch的热更新
+        
+      </div>
     </a>
-    
-    <span class="page-number">•</span>
-    
-    <a class="older-posts" href="/2016/04/20/iOS的urlRoute/">
-        iOS的urlRoute →
+  
+  
+    <a href="/2016/04/20/iOS的urlRoute/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS的urlRoute</div>
+      <strong class="article-nav-caption">></strong>
     </a>
-    
+  
 </nav>
-  <div id="comment" class="comments-area">
-    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
 
-    
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
 </div>
-</main>
 
 
-  
-<footer class="site-footer">
-  
-  <div class="inner">
-     <section class="copyright">All content copyright <a href="/">CodeCode</a> &copy; 2014 &bull; All rights reserved.</section>
-     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="iOS的widget的总结" data-title="iOS的widget的总结" data-url="http://yydd.space/2016/05/07/iOS的widget的总结/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 YYDD
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
   </div>
 </footer>
-
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
-<script type="text/javascript" src="/js/index.js"></script>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
 
 
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
 
 
 
 
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
 </body>
 </html>

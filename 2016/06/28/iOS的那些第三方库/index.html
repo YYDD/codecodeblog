@@ -1,53 +1,213 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>iOS的那些第三方库 | CodeCode</title>
-  <meta name="description" content="" />
-  <meta name="HandheldFriendly" content="True" />
-  <meta name="MobileOptimized" content="320" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
-  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
-
-  <meta name="generator" content="CodeCode">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近比较空，就整理了一下之前项目中用过的并且比较实用的第三方库。还对同类型的第三方库做了实用性的比较。话不多说=，=进入正题
+SDWebImage &amp;amp; YYWebImage &amp;amp; PINRemoteImage对于图片缓存、显示网络图片这一块，我一直用的都是SDWebImage，而且也没出过什么大的问题，蛮稳定的。只不过之前看到一篇关于文章中介绍说图片如何像浏览器那样边下载变现实,当时">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS的那些第三方库">
+<meta property="og:url" content="http://yydd.space/2016/06/28/iOS的那些第三方库/index.html">
+<meta property="og:site_name" content="CodeCode">
+<meta property="og:description" content="最近比较空，就整理了一下之前项目中用过的并且比较实用的第三方库。还对同类型的第三方库做了实用性的比较。话不多说=，=进入正题
+SDWebImage &amp;amp; YYWebImage &amp;amp; PINRemoteImage对于图片缓存、显示网络图片这一块，我一直用的都是SDWebImage，而且也没出过什么大的问题，蛮稳定的。只不过之前看到一篇关于文章中介绍说图片如何像浏览器那样边下载变现实,当时">
+<meta property="og:image" content="http://7xrcp9.com1.z0.glb.clouddn.com/blogblog222.png?imageView2/2/w/600/q/75">
+<meta property="og:updated_time" content="2016-07-02T02:30:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS的那些第三方库">
+<meta name="twitter:description" content="最近比较空，就整理了一下之前项目中用过的并且比较实用的第三方库。还对同类型的第三方库做了实用性的比较。话不多说=，=进入正题
+SDWebImage &amp;amp; YYWebImage &amp;amp; PINRemoteImage对于图片缓存、显示网络图片这一块，我一直用的都是SDWebImage，而且也没出过什么大的问题，蛮稳定的。只不过之前看到一篇关于文章中介绍说图片如何像浏览器那样边下载变现实,当时">
+<meta name="twitter:image" content="http://7xrcp9.com1.z0.glb.clouddn.com/blogblog222.png?imageView2/2/w/600/q/75">
+  
+    <link rel="alternative" href="/atom.xml" title="CodeCode" type="application/atom+xml">
   
   
+    <link rel="icon" href="/favicon.png">
   
-
-  
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xrcp9.com1.z0.glb.clouddn.com/blogheadimg.jpg" class="js-avatar">
+			
+		</a>
 
-<body class="post-template">
+		<hgroup>
+		  <h1 class="header-author"><a href="/">YYDD</a></h1>
+		</hgroup>
 
-  <header class="site-head"  style="background-image: url(http://7xrcp9.com1.z0.glb.clouddn.com/blog123.png?imageView2/1/w/1000/h/300)" >
-    <div class="vertical">
-        <div class="site-head-content inner">
-             <a class="blog-logo" href="https://github.com/YYDD"><img src="http://7xrcp9.com1.z0.glb.clouddn.com/blogheadimg.png" alt="Blog Logo"/></a> 
-            <h1 class="blog-title">CodeCode</h1>
-            <h2 class="blog-description"></h2>
-        </div>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						
+						<li>About</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/YYDD" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/1875745691/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">一个弱弱的程序员=，=</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
     </div>
-</header>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">YYDD</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://7xrcp9.com1.z0.glb.clouddn.com/blogheadimg.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">YYDD</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/YYDD" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/1875745691/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-iOS的那些第三方库" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/28/iOS的那些第三方库/" class="article-date">
+  	<time datetime="2016-06-28T06:47:12.000Z" itemprop="datePublished">2016-06-28</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS的那些第三方库
+    </h1>
   
 
-<main class="content" role="main">
-  <article class="post">
-    <span class="post-meta">
-      <time datetime="2016-06-28T06:47:12.000Z" itemprop="datePublished">
-          2016-06-28
-      </time>
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
     
-</span>
-    <h1 class="post-title">iOS的那些第三方库</h1>
-    <section class="post-content">
-      <p>最近比较空，就整理了一下之前项目中用过的并且比较实用的第三方库。还对同类型的第三方库做了实用性的比较。话不多说=，=进入正题</p>
-<h3 id="SDWebImage-amp-YYWebImage-amp-PINRemoteImage"><a href="#SDWebImage-amp-YYWebImage-amp-PINRemoteImage" class="headerlink" title="SDWebImage &amp; YYWebImage &amp; PINRemoteImage"></a>SDWebImage &amp; YYWebImage &amp; PINRemoteImage</h3><p>对于图片缓存、显示网络图片这一块，我一直用的都是<a href="https://github.com/rs/SDWebImage" target="_blank" rel="external">SDWebImage</a>，而且也没出过什么大的问题，蛮稳定的。只不过之前看到一篇关于文章中介绍说<a href="http://blog.ibireme.com/2015/11/02/ios_image_tips/" target="_blank" rel="external">图片如何像浏览器那样边下载变现实</a>,当时觉得如果能够这样优雅的显示图片，确实在用户体验上能够提升不少。恰巧SDWebImage这个库是在图片完全下载完之后才绘制到界面上的，所以每次图片加载都是有一种突然间跳动变化的感觉，相对来说体验上会有稍许的差别。而其他两个<a href="https://github.com/ibireme/YYWebImage" target="_blank" rel="external">YYWebImage</a>和<a href="https://github.com/pinterest/PINRemoteImage" target="_blank" rel="external">PINRemoteImage</a>在体验要优于SDWebImage不少。<br>注意只有第一种逐行扫描才是兼容PNG和JPEG格式的。但是用户体验优越的是第二种和第三种。但是相对来说出现PNG和JPEG的图片<br>而这三者中，相对来说PINRemoteImage上手比较慢，成本比较大。<br>而对于另外SDWebImage和YYWebImage来说，其实各有千秋。两者对外的接口基本上差不多，所以基本没有额外的使用成本。而两者的优势呢，我个人觉得SDWebImage相对来说稳定，因为毕竟近千次的comment以及100多个issue摆在那里。而YYWebImage在图片的呈现方式上做的比较优雅，用户体验比较好，可定制的内容也比较多。<br>最后总结下：SDWebImage和YYWebImage这两个都有各自的可取之处，如果你求稳定，那么SDWebImage肯定是首选，如果你注重用户体验，或者说加载的图片都是比较大的，那么我觉得还是YYWebImage比较合适。</p>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近比较空，就整理了一下之前项目中用过的并且比较实用的第三方库。还对同类型的第三方库做了实用性的比较。话不多说=，=进入正题</p>
+<h3 id="SDWebImage-amp-YYWebImage-amp-PINRemoteImage"><a href="#SDWebImage-amp-YYWebImage-amp-PINRemoteImage" class="headerlink" title="SDWebImage &amp; YYWebImage &amp; PINRemoteImage"></a>SDWebImage &amp; YYWebImage &amp; PINRemoteImage</h3><p>对于图片缓存、显示网络图片这一块，我一直用的都是<a href="https://github.com/rs/SDWebImage" target="_blank" rel="external">SDWebImage</a>，而且也没出过什么大的问题，蛮稳定的。只不过之前看到一篇关于文章中介绍说<a href="http://blog.ibireme.com/2015/11/02/ios_image_tips/" target="_blank" rel="external">图片如何像浏览器那样边下载变现实</a>,当时觉得如果能够这样优雅的显示图片，确实在用户体验上能够提升不少。恰巧SDWebImage这个库是在图片完全下载完之后才绘制到界面上的，所以每次图片加载都是有一种突然间跳动变化的感觉，相对来说体验上会有稍许的差别。而其他两个<a href="https://github.com/ibireme/YYWebImage" target="_blank" rel="external">YYWebImage</a>和<a href="https://github.com/pinterest/PINRemoteImage" target="_blank" rel="external">PINRemoteImage</a>在体验要优于SDWebImage不少。<a id="more"></a><br>注意只有第一种逐行扫描才是兼容PNG和JPEG格式的。但是用户体验优越的是第二种和第三种。但是相对来说出现PNG和JPEG的图片<br>而这三者中，相对来说PINRemoteImage上手比较慢，成本比较大。<br>而对于另外SDWebImage和YYWebImage来说，其实各有千秋。两者对外的接口基本上差不多，所以基本没有额外的使用成本。而两者的优势呢，我个人觉得SDWebImage相对来说稳定，因为毕竟近千次的comment以及100多个issue摆在那里。而YYWebImage在图片的呈现方式上做的比较优雅，用户体验比较好，可定制的内容也比较多。<br>最后总结下：SDWebImage和YYWebImage这两个都有各自的可取之处，如果你求稳定，那么SDWebImage肯定是首选，如果你注重用户体验，或者说加载的图片都是比较大的，那么我觉得还是YYWebImage比较合适。</p>
 <h3 id="JSONModel-amp-YYModel"><a href="#JSONModel-amp-YYModel" class="headerlink" title="JSONModel &amp; YYModel"></a>JSONModel &amp; YYModel</h3><p>对于数据的封装，网络数据的映射。最一开始的时候我是自己手动解析的，当时就感觉要累趴下了。之后用了<a href="https://github.com/JSONModel/JSONModel" target="_blank" rel="external">JSONModel</a>这个库，感觉不错。类似解析映射的库有很多，如:FastEasyMapping,Mantle,MJextension等。但是但是为什么我选择了这两个呢。原因请看下面这张图：<br><img src="http://7xrcp9.com1.z0.glb.clouddn.com/blogblog222.png?imageView2/2/w/600/q/75" alt="截图"><br>这张图是摘自<a href="http://blog.ibireme.com/2015/10/23/ios_model_framework_benchmark/" target="_blank" rel="external">iOS JSON 模型转换库评测</a><br>从图中可以看出<a href="https://github.com/ibireme/YYModel" target="_blank" rel="external">YYModel</a>的效率比较高。因此当时考虑着，在以后是不是要弃用JSONModel，转战YYModel了。<br>但是看了YYModel之后，我发现它虽然效率高，但是并没有像JSONModel那么“人性化”。这也是在实际的运用中的出来的，在JSONModel中一个model里的属性可以设置它是否是Optional的。</p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">UserModel</span> : <span class="title">JSONModel</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>)<span class="built_in">NSString</span> *userId;</span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>)<span class="built_in">NSString</span> &lt;Optional&gt;*userName;</span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>)<span class="built_in">NSString</span> &lt;Optional&gt;*avatar;</span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>)<span class="built_in">NSNumber</span> &lt;Optional&gt;*gender;</span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>)<span class="built_in">NSString</span> &lt;Optional&gt;*accessToken;</span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>)<span class="built_in">NSNumber</span> &lt;Optional&gt;*createdAt;</span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>)<span class="built_in">NSNumber</span> &lt;Optional&gt;*score;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
 <p>如上面的<code>UserModel</code>其中的有不少属性是Optional的，也就是说这个model只有<code>userId</code>是必定要有的，其他的可以没有。这个在实际的运用中还是满常见的。比如说有些用户有名字，有些没有名字。而用户id作为标示用户的唯一标准，肯定是存在的。<br>而YYModel却没有。<br>所以相比较之下，虽然在效率上低了点，但是对于这个的感知，其实在一定程度上可以有多忽略。主要还是在考虑实用性上面。所以我觉得对于数据的封装来说，JSONModel还是一个不错的库。</p>
@@ -56,64 +216,131 @@
 <p>可想而知，直接使用起来SVProgressHUD有多大的优势。但是看了两者在设备上的呈现，我还发现MBProgressHUD的指示器相对来说比较精细，而SVProgressHUD的有点过大，导致略显粗糙。所以追求美感的同学我建议使用MBProgressHUD。虽然说MBProgressHUD使用起来有点复杂，但是完全可以在它的基础之上在封装一层就可以达到使用起来和SVProgressHUD一样方便~</p>
 <h3 id="暂时over"><a href="#暂时over" class="headerlink" title="暂时over"></a>暂时over</h3><p>恩，以上这些第三方库，就是这次整理出来的。也许你们会差异，神马！才这么几个，其实肯定不止。只是在之前的使用过程中存在疑虑，这几个(SDWebImage,JSONModel,SVProgressHUD)，这三个是否有其他更好的库替换。最后经过调研，尝试之后。在我之后的开发中也许SDWebImage会被YYWebImage替换，而JSONModel坚守住了，SVProgressHUD的话果断换成MBProgressHUD，(因为我是一个无比追求美感和体验的程序员)，但是肯定会在MBProgressHUD上面再封装一层的。不过其实对YYWebImage这个库还是略有保留。因为对于图片的显示这一块在现在的app中占的比重太大了。所以也许会考虑SDWebImage和YYWebImage两者都存在，进行无缝切换。<br>好了，就这么多~</p>
 
-    </section>
-    <footer class="post-footer">
-      <section class="author">
-    <h4>YYDD</h4>
-    <p>A person who is moving on...</p>
-</section>
-      <section class="share">
-    <h4>Share this post</h4>
-    <a class="icon-twitter" href="http://twitter.com/share?url=http://yydd.space/2016/06/28/iOS的那些第三方库/"
-       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-        <span class="hidden">Twitter</span>
-    </a>
-    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yydd.space/2016/06/28/iOS的那些第三方库/"
-       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
-        <span class="hidden">Facebook</span>
-    </a>
-    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yydd.space/2016/06/28/iOS的那些第三方库/"
-       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
-        <span class="hidden">Google+</span>
-    </a>
-</section>
-    </footer>
-  </article>
-  <nav class="pagination" role="pagination">
+      
+    </div>
     
-    <span class="page-number">•</span>
+  </div>
+  
     
-    <a class="older-posts" href="/2016/06/22/关于应用中的图片所占内存的优化/">
-        关于应用中的图片所占内存的优化 →
+<nav id="article-nav">
+  
+  
+    <a href="/2016/06/22/关于应用中的图片所占内存的优化/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">关于应用中的图片所占内存的优化</div>
+      <strong class="article-nav-caption">></strong>
     </a>
-    
+  
 </nav>
-  <div id="comment" class="comments-area">
-    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
 
-    
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
 </div>
-</main>
 
 
-  
-<footer class="site-footer">
-  
-  <div class="inner">
-     <section class="copyright">All content copyright <a href="/">CodeCode</a> &copy; 2014 &bull; All rights reserved.</section>
-     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="iOS的那些第三方库" data-title="iOS的那些第三方库" data-url="http://yydd.space/2016/06/28/iOS的那些第三方库/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 YYDD
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
   </div>
 </footer>
-
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
-<script type="text/javascript" src="/js/index.js"></script>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
 
 
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
 
 
 
 
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
 </body>
 </html>
