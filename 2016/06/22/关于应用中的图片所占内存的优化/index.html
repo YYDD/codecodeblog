@@ -1,117 +1,347 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>关于应用中的图片所占内存的优化 | CodeCode</title>
-  <meta name="description" content="" />
-  <meta name="HandheldFriendly" content="True" />
-  <meta name="MobileOptimized" content="320" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <link rel="stylesheet" type="text/css" href="/css/screen.css" />
-  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700,400italic|Open+Sans:700,400" />
-
-  <meta name="generator" content="CodeCode">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="图片，相信每款app中都有，而且不会少。一个app，所占的内存，图片资源所占去的比例肯定不会小。相信很多同学在加载本地图片资源的时候有时候会不管三七二十一 [UIImage imageNamed:(nonnull NSString *)] 直接是用这个方法来加载图片资源。确实这个方法是比较简单且快速的加载资源的方法。但是大家应该都知道除了[UIImage imageNamed:(nonnull N">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于应用中的图片所占内存的优化">
+<meta property="og:url" content="http://yydd.space/2016/06/22/关于应用中的图片所占内存的优化/index.html">
+<meta property="og:site_name" content="CodeCode">
+<meta property="og:description" content="图片，相信每款app中都有，而且不会少。一个app，所占的内存，图片资源所占去的比例肯定不会小。相信很多同学在加载本地图片资源的时候有时候会不管三七二十一 [UIImage imageNamed:(nonnull NSString *)] 直接是用这个方法来加载图片资源。确实这个方法是比较简单且快速的加载资源的方法。但是大家应该都知道除了[UIImage imageNamed:(nonnull N">
+<meta property="og:image" content="http://7xrcp9.com1.z0.glb.clouddn.com/blogblogQQ20160622-0%402x.png?imageView2/2/w/600/q/75">
+<meta property="og:image" content="http://7xrcp9.com1.z0.glb.clouddn.com/blogblogQQ20160622-3%402x.png?imageView2/2/w/600/q/75">
+<meta property="og:updated_time" content="2016-07-02T02:27:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于应用中的图片所占内存的优化">
+<meta name="twitter:description" content="图片，相信每款app中都有，而且不会少。一个app，所占的内存，图片资源所占去的比例肯定不会小。相信很多同学在加载本地图片资源的时候有时候会不管三七二十一 [UIImage imageNamed:(nonnull NSString *)] 直接是用这个方法来加载图片资源。确实这个方法是比较简单且快速的加载资源的方法。但是大家应该都知道除了[UIImage imageNamed:(nonnull N">
+<meta name="twitter:image" content="http://7xrcp9.com1.z0.glb.clouddn.com/blogblogQQ20160622-0%402x.png?imageView2/2/w/600/q/75">
+  
+    <link rel="alternative" href="/atom.xml" title="CodeCode" type="application/atom+xml">
   
   
+    <link rel="icon" href="/favicon.png">
   
-
-  
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xrcp9.com1.z0.glb.clouddn.com/blogheadimg.jpg" class="js-avatar">
+			
+		</a>
 
-<body class="post-template">
+		<hgroup>
+		  <h1 class="header-author"><a href="/">YYDD</a></h1>
+		</hgroup>
 
-  <header class="site-head"  style="background-image: url(http://7xrcp9.com1.z0.glb.clouddn.com/blog123.png?imageView2/1/w/1000/h/300)" >
-    <div class="vertical">
-        <div class="site-head-content inner">
-             <a class="blog-logo" href="https://github.com/YYDD"><img src="http://7xrcp9.com1.z0.glb.clouddn.com/blogheadimg.png" alt="Blog Logo"/></a> 
-            <h1 class="blog-title">CodeCode</h1>
-            <h2 class="blog-description"></h2>
-        </div>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						
+						<li>About</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/YYDD" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/1875745691/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">一个弱弱的程序员=，=</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
     </div>
-</header>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">YYDD</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://7xrcp9.com1.z0.glb.clouddn.com/blogheadimg.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">YYDD</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/YYDD" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/1875745691/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-关于应用中的图片所占内存的优化" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/22/关于应用中的图片所占内存的优化/" class="article-date">
+  	<time datetime="2016-06-22T06:23:03.000Z" itemprop="datePublished">2016-06-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      关于应用中的图片所占内存的优化
+    </h1>
   
 
-<main class="content" role="main">
-  <article class="post">
-    <span class="post-meta">
-      <time datetime="2016-06-22T06:23:03.000Z" itemprop="datePublished">
-          2016-06-22
-      </time>
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
     
-</span>
-    <h1 class="post-title">关于应用中的图片所占内存的优化</h1>
-    <section class="post-content">
-      <p>图片，相信每款app中都有，而且不会少。<br>一个app，所占的内存，图片资源所占去的比例肯定不会小。相信很多同学在加载本地图片资源的时候有时候会不管三七二十一 <code>[UIImage imageNamed:(nonnull NSString *)]</code> 直接是用这个方法来加载图片资源。确实这个方法是比较简单且快速的加载资源的方法。但是大家应该都知道除了<code>[UIImage imageNamed:(nonnull NSString *)]</code>这个方法外，加载图片资源还有另外一个方法。对!就是 <code>[UIImage imageWithContentsOfFile:(nonnull NSString *)]</code>这个方法。那么这两者的区别到底是什么呢？<code>[UIImage imageWithContentsOfFile:(nonnull NSString *)]</code>这个方法加载图片，图片所占的内存不会一直保留着。而<code>[UIImage imageNamed:(nonnull NSString *)]</code>这个方法加载图片，内存会一直保留着，除非手动清除，或者说是app销毁。当然对于一直在内存中的图片，因为不需要进行磁盘的读写，在加载的时候速度肯定是要比从磁盘中读写的图片快很多。<br>那么这两个方法分别在什么情况下使用呢？比较官方的说法就是，如果图片比较大，而且图片出现的频次不高的话，应该用<code>[UIImage imageWithContentsOfFile:(nonnull NSString *)]</code>，因为出现的次数少，就没必要一直在内存中，直接从磁盘中加载下就可以了。那么对应的具体情况呢，相对来说，一般的登录页面的图片资源，一些帮助页面的资源等这些相对来说出现的次数比较少，可以考虑用不会持续占着内存的加载方式。</p>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>图片，相信每款app中都有，而且不会少。<br>一个app，所占的内存，图片资源所占去的比例肯定不会小。相信很多同学在加载本地图片资源的时候有时候会不管三七二十一 <code>[UIImage imageNamed:(nonnull NSString *)]</code> 直接是用这个方法来加载图片资源。确实这个方法是比较简单且快速的加载资源的方法。但是大家应该都知道除了<code>[UIImage imageNamed:(nonnull NSString *)]</code>这个方法外，加载图片资源还有另外一个方法。对!就是 <code>[UIImage imageWithContentsOfFile:(nonnull NSString *)]</code>这个方法。那么这两者的区别到底是什么呢？<code>[UIImage imageWithContentsOfFile:(nonnull NSString *)]</code>这个方法加载图片，图片所占的内存不会一直保留着。而<code>[UIImage imageNamed:(nonnull NSString *)]</code>这个方法加载图片，内存会一直保留着，除非手动清除，或者说是app销毁。当然对于一直在内存中的图片，因为不需要进行磁盘的读写，在加载的时候速度肯定是要比从磁盘中读写的图片快很多。<a id="more"></a><br>那么这两个方法分别在什么情况下使用呢？比较官方的说法就是，如果图片比较大，而且图片出现的频次不高的话，应该用<code>[UIImage imageWithContentsOfFile:(nonnull NSString *)]</code>，因为出现的次数少，就没必要一直在内存中，直接从磁盘中加载下就可以了。那么对应的具体情况呢，相对来说，一般的登录页面的图片资源，一些帮助页面的资源等这些相对来说出现的次数比较少，可以考虑用不会持续占着内存的加载方式。</p>
 <p>其实这个并不是我想说的重点，因为本地图片资源的优化，其实并不能够减少多少的内存，相信设计师们也不会给出很大的图片资源。那么，下面重头戏来了~~~<br>这个是在之前的项目中总结出来的，因为是针对单个app做的优化，所以不可否认存在一定的局限性。<br>之前我们做的一款论坛类的app。在app中主要的组成是“帖子”。而在帖子的内容中会出现大量的图片。一个帖子内十几二十张图片是很正常的,而且每张图片的大小大概会在50kb左右。<code>SDWebImage</code>这个图片的第三方库相信大家都知道。恩，我们用的图片加载的库就是它~在他的介绍中有这样一句话”An asynchronous memory + disk image caching with automatic cache expiration handling.”所以也就是说我在app中打开过查看过多少图片，所有的图片都会在内存中，如果浏览的越多，那么app所占的内存就会越大。当时就想着千万不能让内存这样无止境的涨下去。所以需要做的就是清除内存中部分图片的内存。<br>于是乎我就疯狂的在<code>SDWebImage</code>的库里面穿梭，寻找解决的方法，开始想着是和cache一样，是否可以设置一个最大的内存值，或者说限制缓存多少尺寸以内的图片。结果一不小心被我找到了<code>SDImageCache</code>这个类，里面有这样一个属性（如下图所示）<br><img src="http://7xrcp9.com1.z0.glb.clouddn.com/blogblogQQ20160622-0%402x.png?imageView2/2/w/600/q/75" alt="截图"></p>
 <p>红色框框起来的这个属性，心想着太棒了居然真有可以设置最大内存值。但是设置完之后发现压根儿就没用。开始我以为是我设置的姿势不对，换了各种姿势尝试了一遍，发现还是没有用。没办法，只能去他的实现文件里面看个究竟。然而我惊奇的发现，对于<code>maxMemoryCost</code>这个属性，只是set了一下，然后就没有然后了，其他没有地方用到它的。当时我就懵x了。但是还是不放弃，继续搜寻，找到了下面这几个方法<br><img src="http://7xrcp9.com1.z0.glb.clouddn.com/blogblogQQ20160622-3%402x.png?imageView2/2/w/600/q/75" alt="截图"><br>从注释上看，这几个方法都可以清理内存中的图片。不过有些方法有“副作用”，比如<code>- (void)removeImageForKey:(NSString *)key</code>这个方法就如他备注里说的会一并把磁盘中的也清除掉。这种情况肯定是不想要的，用这个第三方库的主要目的就是为了做图片缓存。又比如<code>- (void)clearMemory</code>这个方法，只能清除所有内存中的图片。往往这个实际情况是有出入的。而我希望的是清除部分的图片。所以最后选择的方法是:<code>- (void)removeImageForKey:(NSString *)key fromDisk:(BOOL)fromDisk</code> 其中fromDisk=NO。这样就能做到清除一些比较大的出现次数比较少的图片了。<br>最后我在讲一下具体是怎么优化的。对于论坛类的app，主要有所有的帖子列表页和单个帖子的详细内容展示页。因为可以理解为用户操作是会频繁的浏览列表页，但是对于同一个帖子的详细内容页不会频繁的进出。在这样的前提下，我就可以认为帖子详细页里面的图片内存我是不需要的，只要缓存在磁盘中就可以了，而列表页因为需要频繁的访问，所以需要一直留在内存中。基于这个情况下，当进入单个帖子的详细内容展示页的时候开始记录所有加载的图片，当离开详细页的时候（或者说该页面被销毁的时候），结束加载的图片的记录，并且把记录下来的图片从内存中移除掉。在实际运用的过程中，发现确实是可行的~<br>以上就是在之前的项目中优化的时候，对于图片所占内存这一块所作的优化，也许这个方法局限性很大，但是思路是可取的，恩！可取的=，=</p>
 
-    </section>
-    <footer class="post-footer">
-      <section class="author">
-    <h4>YYDD</h4>
-    <p>A person who is moving on...</p>
-</section>
-      <section class="share">
-    <h4>Share this post</h4>
-    <a class="icon-twitter" href="http://twitter.com/share?url=http://yydd.space/2016/06/22/关于应用中的图片所占内存的优化/"
-       onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-        <span class="hidden">Twitter</span>
-    </a>
-    <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://yydd.space/2016/06/22/关于应用中的图片所占内存的优化/"
-       onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
-        <span class="hidden">Facebook</span>
-    </a>
-    <a class="icon-google-plus" href="https://plus.google.com/share?url=http://yydd.space/2016/06/22/关于应用中的图片所占内存的优化/"
-       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
-        <span class="hidden">Google+</span>
-    </a>
-</section>
-    </footer>
-  </article>
-  <nav class="pagination" role="pagination">
+      
+    </div>
     
-    <a class="newer-posts" href="/2016/06/28/iOS的那些第三方库/">
-        ← iOS的那些第三方库
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/28/iOS的那些第三方库/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          iOS的那些第三方库
+        
+      </div>
     </a>
-    
-    <span class="page-number">•</span>
-    
-    <a class="older-posts" href="/2016/05/22/关于jspatch的热更新/">
-        关于jspatch的热更新 →
+  
+  
+    <a href="/2016/05/22/关于jspatch的热更新/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">关于jspatch的热更新</div>
+      <strong class="article-nav-caption">></strong>
     </a>
-    
+  
 </nav>
-  <div id="comment" class="comments-area">
-    <h1 class="title"><a href="#disqus_comments" name="disqus_comments">Comments</a></h1>
 
-    
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
 </div>
-</main>
 
 
-  
-<footer class="site-footer">
-  
-  <div class="inner">
-     <section class="copyright">All content copyright <a href="/">CodeCode</a> &copy; 2014 &bull; All rights reserved.</section>
-     <section class="poweredby">Proudly published with <a class="icon-ghost" href="http://zespia.tw/hexo/">Hexo</a></section>
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="关于应用中的图片所占内存的优化" data-title="关于应用中的图片所占内存的优化" data-url="http://yydd.space/2016/06/22/关于应用中的图片所占内存的优化/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 YYDD
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
   </div>
 </footer>
-
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-<script type="text/javascript" src="/js/jquery.fitvids.js"></script>
-<script type="text/javascript" src="/js/index.js"></script>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
 
 
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
 
 
 
 
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
 </body>
 </html>
