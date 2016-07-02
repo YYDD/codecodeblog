@@ -7,7 +7,7 @@ tags:
 
 ### SDWebImage & YYWebImage & PINRemoteImage
 
-对于图片缓存、显示网络图片这一块，我一直用的都是[SDWebImage](https://github.com/rs/SDWebImage)，而且也没出过什么大的问题，蛮稳定的。只不过之前看到一篇关于文章中介绍说[图片如何像浏览器那样边下载变现实](http://blog.ibireme.com/2015/11/02/ios_image_tips/),当时觉得如果能够这样优雅的显示图片，确实在用户体验上能够提升不少。恰巧SDWebImage这个库是在图片完全下载完之后才绘制到界面上的，所以每次图片加载都是有一种突然间跳动变化的感觉，相对来说体验上会有稍许的差别。而其他两个[YYWebImage](https://github.com/ibireme/YYWebImage)和[PINRemoteImage](https://github.com/pinterest/PINRemoteImage)在体验要优于SDWebImage不少。
+对于图片缓存、显示网络图片这一块，我一直用的都是[SDWebImage](https://github.com/rs/SDWebImage)，而且也没出过什么大的问题，蛮稳定的。只不过之前看到一篇关于文章中介绍说[图片如何像浏览器那样边下载变现实](http://blog.ibireme.com/2015/11/02/ios_image_tips/),当时觉得如果能够这样优雅的显示图片，确实在用户体验上能够提升不少。恰巧SDWebImage这个库是在图片完全下载完之后才绘制到界面上的，所以每次图片加载都是有一种突然间跳动变化的感觉，相对来说体验上会有稍许的差别。而其他两个[YYWebImage](https://github.com/ibireme/YYWebImage)和[PINRemoteImage](https://github.com/pinterest/PINRemoteImage)在体验要优于SDWebImage不少。<!--more-->
 注意只有第一种逐行扫描才是兼容PNG和JPEG格式的。但是用户体验优越的是第二种和第三种。但是相对来说出现PNG和JPEG的图片
 而这三者中，相对来说PINRemoteImage上手比较慢，成本比较大。
 而对于另外SDWebImage和YYWebImage来说，其实各有千秋。两者对外的接口基本上差不多，所以基本没有额外的使用成本。而两者的优势呢，我个人觉得SDWebImage相对来说稳定，因为毕竟近千次的comment以及100多个issue摆在那里。而YYWebImage在图片的呈现方式上做的比较优雅，用户体验比较好，可定制的内容也比较多。
