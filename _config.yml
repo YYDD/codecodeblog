@@ -65,6 +65,9 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 theme: hexo-theme-yilia
 
+# baidu analytics
+baidu_analytics:164f0fde1a8703d232bd5565184d07fd
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
