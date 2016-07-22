@@ -6,22 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>oc中的category和extension | CodeCode</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="##介绍
-###category
-category的中文名叫做“分类”。category正常情况下只能增加方法，不能增加成员变量。而在分类中仍旧是可以访问原来的类中的成员变量和方法。如果分类中的方法和原来的类同名的情况下，优先调用的是分类中的方法。（注意：这里优先调用的意思，并不是覆盖原来的方法，其实是因为运行时查找方法的时候是顺着方法列表的顺序查找的，它只要一找到对应的名字的额方法就会返回，而编">
+  <meta name="description" content="介绍categorycategory的中文名叫做“分类”。category正常情况下只能增加方法，不能增加成员变量。而在分类中仍旧是可以访问原来的类中的成员变量和方法。如果分类中的方法和原来的类同名的情况下，优先调用的是分类中的方法。（注意：这里优先调用的意思，并不是覆盖原来的方法，其实是因为运行时查找方法的时候是顺着方法列表的顺序查找的，它只要一找到对应的名字的额方法就会返回，而编译时候可以直接">
 <meta property="og:type" content="article">
 <meta property="og:title" content="oc中的category和extension">
 <meta property="og:url" content="http://yydd.space/2016/07/22/oc中的category和extension的/index.html">
 <meta property="og:site_name" content="CodeCode">
-<meta property="og:description" content="##介绍
-###category
-category的中文名叫做“分类”。category正常情况下只能增加方法，不能增加成员变量。而在分类中仍旧是可以访问原来的类中的成员变量和方法。如果分类中的方法和原来的类同名的情况下，优先调用的是分类中的方法。（注意：这里优先调用的意思，并不是覆盖原来的方法，其实是因为运行时查找方法的时候是顺着方法列表的顺序查找的，它只要一找到对应的名字的额方法就会返回，而编">
-<meta property="og:updated_time" content="2016-07-22T08:11:02.000Z">
+<meta property="og:description" content="介绍categorycategory的中文名叫做“分类”。category正常情况下只能增加方法，不能增加成员变量。而在分类中仍旧是可以访问原来的类中的成员变量和方法。如果分类中的方法和原来的类同名的情况下，优先调用的是分类中的方法。（注意：这里优先调用的意思，并不是覆盖原来的方法，其实是因为运行时查找方法的时候是顺着方法列表的顺序查找的，它只要一找到对应的名字的额方法就会返回，而编译时候可以直接">
+<meta property="og:updated_time" content="2016-07-22T08:17:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="oc中的category和extension">
-<meta name="twitter:description" content="##介绍
-###category
-category的中文名叫做“分类”。category正常情况下只能增加方法，不能增加成员变量。而在分类中仍旧是可以访问原来的类中的成员变量和方法。如果分类中的方法和原来的类同名的情况下，优先调用的是分类中的方法。（注意：这里优先调用的意思，并不是覆盖原来的方法，其实是因为运行时查找方法的时候是顺着方法列表的顺序查找的，它只要一找到对应的名字的额方法就会返回，而编">
+<meta name="twitter:description" content="介绍categorycategory的中文名叫做“分类”。category正常情况下只能增加方法，不能增加成员变量。而在分类中仍旧是可以访问原来的类中的成员变量和方法。如果分类中的方法和原来的类同名的情况下，优先调用的是分类中的方法。（注意：这里优先调用的意思，并不是覆盖原来的方法，其实是因为运行时查找方法的时候是顺着方法列表的顺序查找的，它只要一找到对应的名字的额方法就会返回，而编译时候可以直接">
   
     <link rel="alternative" href="/atom.xml" title="CodeCode" type="application/atom+xml">
   
@@ -207,17 +201,11 @@ category的中文名叫做“分类”。category正常情况下只能增加方�
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##介绍</p>
-<p>###category</p>
-<p>category的中文名叫做“分类”。<br>category正常情况下只能增加方法，不能增加成员变量。而在分类中仍旧是可以访问原来的类中的成员变量和方法。如果分类中的方法和原来的类同名的情况下，优先调用的是分类中的方法。（注意：这里优先调用的意思，并不是覆盖原来的方法，其实是因为运行时查找方法的时候是顺着方法列表的顺序查找的，它只要一找到对应的名字的额方法就会返回，而编译时候可以直接是原来的类先加载，之后再加载category的类，所以是优先查找到了category中的方法，而原来的类中同样的方法，只是在列表中更后面而已，没有被查找出来。）<a id="more"></a></p>
-<p>###extension</p>
-<p>extension的中文名叫做“类扩展”，可以说类扩展是分类的一种特例。<br>而extension它只有一个头文件（.h文件），所有方法属性的实现仍旧是在原来类的实现文件中(.m文件)。它和category的区别就是它可以定义属性。而在category中我只是说正常情况下不能添加属性。那么其实如果用比较trick的方法还是可以变向的增加属性的。具体就是用自定义来生成set和get方法，用<code>objc_getAssociatedObject(id object, const void *key)</code>来实现get方法，用<code>objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy)</code>来实现set方法。</p>
-<p>##区别</p>
-<p>category和extension虽然很相似。其实在这之前我只用过category，基本上没有用过extension。但是后来发现其实两者在某些方面还是有很大的区别，而且extension在所有开源代码的类中，可以起到很大的作用。<br>extension虽然看起来像一个匿名的category，但是这两者的区别还是蛮大的。extension在编译期的时候就决定，他就是类的一部分，在编译期和头文件里的<code>@interface</code>以及实现文件里的<code>@implement</code>一起形成一个完整的类，他伴随类的产生而产生，当让销毁也是同时的。extension一般可以用来影藏类的一些私有信息。当然用extension的前提是你必须拥有一个类的所有源码，因为你需要把extension声明的属性或者方法，在类的实现文件中具体实现，如果没有源码则无法完成。就如你无法给系统的<code>NSString</code>类添加extension。<br>而category则是在运行期决定的。因此也可以用过这点的区别，了解到为什么category无法添加实例变量。因为在运行期对象的内存布局已经确定，无法再增加。</p>
-<p>##运用</p>
-<p>那么对于在实际情况中如何运用呢。<br>1、这一点，也是硬杠子。如果是对系统的类或者说是第三方依赖的类（也就是你无法获得到源码的，或者说对于第三方的不要轻易的去更改原始的内容）这个时候是不考虑extension。如果要扩展这个类的内容那么这时候肯定是选择category。<br>2、看你具体要实现的功能点，如果你是要替换原有的方法，那么选择的是category，如果是新增方法，这个时候category和extension都可以选择。<br>3、最后讲一下我自己如何使用的吧。基本上如果是新增方法或者是修改原来的方法的时候我都会选择category，因为相对于extension来说category的代码结构更加的清晰。而且如果你不需要这个额外新增的方法，只需要移除加入的category的头文件和实现文件就可以了。完全不会牵涉到原来的类。对于多人协作的时候，这个优点更加突出。而extension，我之前在这个场景下用过，一个自己开发的框架，但是他的某些方法，我只想暴露给框架里的其他类，但是我并不想完全暴露给所有类。那么这时候吧这些方法放到extension的头文件中是再合适不过了。需要这样实现主要是因为在oc中没有包的概念。</p>
-<p>##总结</p>
-<p>恩，对于category和extension就讲到这里，使用category和extension能够使得我们的代码更加的简洁，优美~</p>
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><h3 id="category"><a href="#category" class="headerlink" title="category"></a>category</h3><p>category的中文名叫做“分类”。<br>category正常情况下只能增加方法，不能增加成员变量。而在分类中仍旧是可以访问原来的类中的成员变量和方法。如果分类中的方法和原来的类同名的情况下，优先调用的是分类中的方法。（注意：这里优先调用的意思，并不是覆盖原来的方法，其实是因为运行时查找方法的时候是顺着方法列表的顺序查找的，它只要一找到对应的名字的额方法就会返回，而编译时候可以直接是原来的类先加载，之后再加载category的类，所以是优先查找到了category中的方法，而原来的类中同样的方法，只是在列表中更后面而已，没有被查找出来。）<a id="more"></a></p>
+<h3 id="extension"><a href="#extension" class="headerlink" title="extension"></a>extension</h3><p>extension的中文名叫做“类扩展”，可以说类扩展是分类的一种特例。<br>而extension它只有一个头文件（.h文件），所有方法属性的实现仍旧是在原来类的实现文件中(.m文件)。它和category的区别就是它可以定义属性。而在category中我只是说正常情况下不能添加属性。那么其实如果用比较trick的方法还是可以变向的增加属性的。具体就是用自定义来生成set和get方法，用<code>objc_getAssociatedObject(id object, const void *key)</code>来实现get方法，用<code>objc_setAssociatedObject(id object, const void *key, id value, objc_AssociationPolicy policy)</code>来实现set方法。</p>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>category和extension虽然很相似。其实在这之前我只用过category，基本上没有用过extension。但是后来发现其实两者在某些方面还是有很大的区别，而且extension在所有开源代码的类中，可以起到很大的作用。<br>extension虽然看起来像一个匿名的category，但是这两者的区别还是蛮大的。extension在编译期的时候就决定，他就是类的一部分，在编译期和头文件里的<code>@interface</code>以及实现文件里的<code>@implement</code>一起形成一个完整的类，他伴随类的产生而产生，当让销毁也是同时的。extension一般可以用来影藏类的一些私有信息。当然用extension的前提是你必须拥有一个类的所有源码，因为你需要把extension声明的属性或者方法，在类的实现文件中具体实现，如果没有源码则无法完成。就如你无法给系统的<code>NSString</code>类添加extension。<br>而category则是在运行期决定的。因此也可以用过这点的区别，了解到为什么category无法添加实例变量。因为在运行期对象的内存布局已经确定，无法再增加。</p>
+<h2 id="运用"><a href="#运用" class="headerlink" title="运用"></a>运用</h2><p>那么对于在实际情况中如何运用呢。<br>1、这一点，也是硬杠子。如果是对系统的类或者说是第三方依赖的类（也就是你无法获得到源码的，或者说对于第三方的不要轻易的去更改原始的内容）这个时候是不考虑extension。如果要扩展这个类的内容那么这时候肯定是选择category。<br>2、看你具体要实现的功能点，如果你是要替换原有的方法，那么选择的是category，如果是新增方法，这个时候category和extension都可以选择。<br>3、最后讲一下我自己如何使用的吧。基本上如果是新增方法或者是修改原来的方法的时候我都会选择category，因为相对于extension来说category的代码结构更加的清晰。而且如果你不需要这个额外新增的方法，只需要移除加入的category的头文件和实现文件就可以了。完全不会牵涉到原来的类。对于多人协作的时候，这个优点更加突出。而extension，我之前在这个场景下用过，一个自己开发的框架，但是他的某些方法，我只想暴露给框架里的其他类，但是我并不想完全暴露给所有类。那么这时候吧这些方法放到extension的头文件中是再合适不过了。需要这样实现主要是因为在oc中没有包的概念。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>恩，对于category和extension就讲到这里，使用category和extension能够使得我们的代码更加的简洁，优美~</p>
 
       
     </div>
