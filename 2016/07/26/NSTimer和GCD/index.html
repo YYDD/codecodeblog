@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>NSTimer和GCD | CodeCode</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在ios的实际运用中，延迟执行方法，一般有GCD、NSTimer和performSelector方法。这里我主要要讲的是GCD和NSTimer这两大类。
+NSTimerNSTimer的创建很简单，基本上如果是直接用@selector的话，基本上就下面两种方法：12+ (NSTimer *)timerWithTimeInterval:(NSTimeInterval)ti target:(id)aTa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NSTimer和GCD">
+<meta property="og:url" content="http://yydd.space/2016/07/26/NSTimer和GCD/index.html">
+<meta property="og:site_name" content="CodeCode">
+<meta property="og:description" content="在ios的实际运用中，延迟执行方法，一般有GCD、NSTimer和performSelector方法。这里我主要要讲的是GCD和NSTimer这两大类。
+NSTimerNSTimer的创建很简单，基本上如果是直接用@selector的话，基本上就下面两种方法：12+ (NSTimer *)timerWithTimeInterval:(NSTimeInterval)ti target:(id)aTa">
+<meta property="og:updated_time" content="2016-07-26T08:08:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NSTimer和GCD">
+<meta name="twitter:description" content="在ios的实际运用中，延迟执行方法，一般有GCD、NSTimer和performSelector方法。这里我主要要讲的是GCD和NSTimer这两大类。
+NSTimerNSTimer的创建很简单，基本上如果是直接用@selector的话，基本上就下面两种方法：12+ (NSTimer *)timerWithTimeInterval:(NSTimeInterval)ti target:(id)aTa">
+  
+    <link rel="alternative" href="/atom.xml" title="CodeCode" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xrcp9.com1.z0.glb.clouddn.com/blogheadimg.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">YYDD</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						
+						<li>About</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/YYDD" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/1875745691/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">一个弱弱的程序员=，=</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">YYDD</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://7xrcp9.com1.z0.glb.clouddn.com/blogheadimg.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">YYDD</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/YYDD" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/1875745691/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-NSTimer和GCD" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/26/NSTimer和GCD/" class="article-date">
+  	<time datetime="2016-07-26T06:40:06.000Z" itemprop="datePublished">2016-07-26</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      NSTimer和GCD
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在ios的实际运用中，延迟执行方法，一般有<code>GCD</code>、<code>NSTimer</code>和<code>performSelector</code>方法。这里我主要要讲的是<code>GCD</code>和<code>NSTimer</code>这两大类。</p>
+<h3 id="NSTimer"><a href="#NSTimer" class="headerlink" title="NSTimer"></a>NSTimer</h3><p>NSTimer的创建很简单，基本上如果是直接用<code>@selector</code>的话，基本上就下面两种方法：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="built_in">NSTimer</span> *)timerWithTimeInterval:(<span class="built_in">NSTimeInterval</span>)ti target:(<span class="keyword">id</span>)aTarget selector:(SEL)aSelector userInfo:(nullable <span class="keyword">id</span>)userInfo repeats:(<span class="built_in">BOOL</span>)yesOrNo;</span><br><span class="line">+ (<span class="built_in">NSTimer</span> *)scheduledTimerWithTimeInterval:(<span class="built_in">NSTimeInterval</span>)ti target:(<span class="keyword">id</span>)aTarget selector:(SEL)aSelector userInfo:(nullable <span class="keyword">id</span>)userInfo repeats:(<span class="built_in">BOOL</span>)yesOrNo;</span><br></pre></td></tr></table></figure></p>
+<p>对于这两个方法虽然乍一眼看过去没差，参数什么的都一样的。但是其实这里还是存在一点点小坑的。不过在讲这个小坑之前需要讲一下RunLoop。<a id="more"></a><br><strong>NSRunLoop</strong>是消息机制的处理模式。NSRunLoop的作用在于有事情做的时候使得当前的NSRunLoop的线程工作，没有事情做的时候让其线程休眠。NSTimer默认是添加到当前NSRunLoop中，也可以手动指定添加到自己新建的NSRunLoop中。NSRunLoop就是一直在循环检测，从线程的开始到线程的结束，检测事件。<br>而NSRunLoop大概有以下几种模式：</p>
+<ul>
+<li>default模式：几乎包括所有输入源（除NSConnection）。即NSDefaultRunLoopModel模式</li>
+<li>model模式：处理modal panels</li>
+<li>connection模式：处理NSConnection事件，属于系统内部，用户基本不用</li>
+<li>event tracking模式：如组件拖动输入源，但是不处理定时事件。即UITrackingRunLoopModel</li>
+<li><p>common model模式：这是一组可配置的通用模式。将input sources与该模式关联则同时也将input sources与该组中的其他模式进行了关联。即NSRunLoopCommonModel</p>
+<p>好了对于NSRunLoop的科普，就暂时先到这里~<br>继续讲上面两种创建NSTimer的方法。而这两个方法的区别也正是坑的所在。第一个方法也就是<code>timerWithTimeInterval</code>这个方法只是创建了<code>NSTimer</code>，并不会将他添加到任何一个RunLoop中。所以这个的意思就是说该方法创建出来的<code>NSTimer</code>并不能直接跑定时器，因为他不在任何一个RunLoop钟。所以还需要将他add到一个RunLoop中。而第二个方法<code>scheduledTimerWithTimeInterval</code>创建的时候就已经将<code>NSTimer</code>自动添加到默认的RunLoop中了。那么可以说第二个方法相对来说是比较好用的，因为他并不需要再多做一步将其加入到RunLoop中。恩~可以这么说，但是这里我还要小小的科普一个知识。也是关于RunLoop的。<br>如果当前的模式不是NSTimer所在的模式，也就是RunLoop进入了休眠状态，那么这时候NSTimer肯定是不会持续响应的。那么具体哪几种情况会这样呢，就简单的举个例子，也是最常见的。比如通过<code>scheduledTimerWithTimeInterval</code>创建的NSTimer是在默认的RunLoop中，也就是NSDefaultRunLoopModel中的，但是如果这时候界面中有列表，滑动列表，这个操作当前的RunLoop会切换到UITrackingRunLoopModel，这个时候NSTimer就不会响应。</p>
+</li>
+</ul>
+<p>基于以上这一点，大家是不是觉得之前的有些定时器的实现好像会有点小问题呢。那么如何做到在任何情况下都可以保证NSTimer响应呢？其实很简单，主要把NSTimer加入到NSRunLoopCommonModel模式下即可。这一点对于用<code>timerWithTimeInterval</code>创建的完全没问题，因为他一开始就没有在任何一个RunLoop中，而用<code>scheduledTimerWithTimeInterval</code>创建的因为一开始在默认的RunLoop中，重新将其add到另一个model中不知道会不会有影响，然而我直接测试看效果是没有影响的，但是具体的后台的操作是怎样的，我就不清楚了。所以在不知情的情况下，我认为还是用<code>timerWithTimeInterval</code>创建，比较靠谱。</p>
+<h3 id="GCD"><a href="#GCD" class="headerlink" title="GCD"></a>GCD</h3><p>对于GCD，我只能说好用！好用！真好用！！！=，=。<br>GCD都是以block的形式，所以用起来相对来说比较方便，而且代码看起来也比较清爽。最主要的一点是GCD所执行的可以跨进程响应，这一点是NSTimer没办法做到的。GCD之前一直说有一点不足的是执行的逻辑没办法取消。不过如果用GCD来创建timer的话，完全没有这个顾虑，这个兼职是结合了GCD和NSTimer的优点。具体的创建如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span>.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, <span class="number">0</span>, <span class="number">0</span>, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>));</span><br><span class="line">dispatch_source_set_timer(<span class="keyword">self</span>.timer, DISPATCH_TIME_NOW, <span class="number">1.0</span> * <span class="built_in">NSEC_PER_SEC</span>, <span class="number">0.5</span> * <span class="built_in">NSEC_PER_SEC</span>);</span><br><span class="line">dispatch_source_set_event_handler(<span class="keyword">self</span>.timer, ^&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"-----test....dispatch_timer"</span>);</span><br><span class="line">    dispatch_cancel(<span class="keyword">self</span>.timer);    <span class="comment">//执行一次就取消</span></span><br><span class="line">&#125;);</span><br><span class="line">dispatch_resume(<span class="keyword">self</span>.timer);</span><br></pre></td></tr></table></figure>
+<p>看上面的代码，是不是有种帅爆了的感觉。但是这里也同样有个小坑，就是所创建的<code>dispatch_source_t</code>类型的<code>timer</code>，需要对他持有，所以是全局变量，不然的话在arc的情况下，会马上被回收掉。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>对于这两者，其实各有千秋吧。<br>但是单单就我自己而言，我是比较喜欢GCD的这种形式的，主要原因还是GCD的这种形式的代码结构比较清晰。然而因为GCD用的是block的形式，那么就肯定会有block的循环引用的问题。而NSTimer如果不在特定的时候停止，也会一直强持有，也会造成内存泄露的问题。<br>所以说各有千秋，看大家的喜好咯~</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/07/22/oc中的category和extension的/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">oc中的category和extension</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="NSTimer和GCD" data-title="NSTimer和GCD" data-url="http://yydd.space/2016/07/26/NSTimer和GCD/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 YYDD
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_page_pv">
+  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+</footer>
+
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

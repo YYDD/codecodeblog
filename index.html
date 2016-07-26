@@ -169,6 +169,64 @@
 
       <div class="body-wrap">
   
+    <article id="post-NSTimer和GCD" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/26/NSTimer和GCD/" class="article-date">
+  	<time datetime="2016-07-26T06:40:06.000Z" itemprop="datePublished">2016-07-26</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/26/NSTimer和GCD/">NSTimer和GCD</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在ios的实际运用中，延迟执行方法，一般有<code>GCD</code>、<code>NSTimer</code>和<code>performSelector</code>方法。这里我主要要讲的是<code>GCD</code>和<code>NSTimer</code>这两大类。</p>
+<h3 id="NSTimer"><a href="#NSTimer" class="headerlink" title="NSTimer"></a>NSTimer</h3><p>NSTimer的创建很简单，基本上如果是直接用<code>@selector</code>的话，基本上就下面两种方法：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="built_in">NSTimer</span> *)timerWithTimeInterval:(<span class="built_in">NSTimeInterval</span>)ti target:(<span class="keyword">id</span>)aTarget selector:(SEL)aSelector userInfo:(nullable <span class="keyword">id</span>)userInfo repeats:(<span class="built_in">BOOL</span>)yesOrNo;</span><br><span class="line">+ (<span class="built_in">NSTimer</span> *)scheduledTimerWithTimeInterval:(<span class="built_in">NSTimeInterval</span>)ti target:(<span class="keyword">id</span>)aTarget selector:(SEL)aSelector userInfo:(nullable <span class="keyword">id</span>)userInfo repeats:(<span class="built_in">BOOL</span>)yesOrNo;</span><br></pre></td></tr></table></figure></p>
+<p>对于这两个方法虽然乍一眼看过去没差，参数什么的都一样的。但是其实这里还是存在一点点小坑的。不过在讲这个小坑之前需要讲一下RunLoop。
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/07/26/NSTimer和GCD/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-oc中的category和extension的" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
