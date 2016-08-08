@@ -169,6 +169,63 @@
 
       <div class="body-wrap">
   
+    <article id="post-科普URL" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/08/科普URL/" class="article-date">
+  	<time datetime="2016-08-08T06:37:24.000Z" itemprop="datePublished">2016-08-08</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/08/科普URL/">科普URL</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在一个机缘巧合的场景下，发现我对于url的组成好像有点略带懵逼。所以果断查了下资料科普了下。讲到url不得不说下uri。</p>
+<h3 id="url和uri的区别"><a href="#url和uri的区别" class="headerlink" title="url和uri的区别"></a>url和uri的区别</h3><p>关于url和uri，对于我来说，之前都是懵逼的。URL的组成，也只是一知半解而已。今天好好的科普了下。顺带记录下~~<br>那么url和uri到底有什么区别呢？最简单的一句话就是url是uri的一个子集。官方的就是uri可以表示以为一个域也可以用来表示一个资源，而url只能用来表示一个资源。那么也就是说如果一串字符串是一个url那么它势必是一个uri。
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/08/08/科普URL/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-NSTimer和GCD" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -679,62 +736,10 @@
 
 
   
-    <article id="post-消息转发" class="article article-type-post" itemscope itemprop="blogPost">
   
-    <div class="article-meta">
-      <a href="/2016/04/02/消息转发/" class="article-date">
-  	<time datetime="2016-04-02T02:22:04.000Z" itemprop="datePublished">2016-04-02</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/02/消息转发/">消息转发</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>对于“消息转发”这个词，我并不想解释什么。直接用下面的error来说话吧：<br><code>-[__NSCFConstantString objectForKey:]: unrecognized selector sent to instance 0x1050a6be8</code><br><code>-[__NSCFNumber isEqualToString:]: unrecognized selector sent to instance 0xb0000000000007b2</code><br>上面的crash日志，肯定都不会陌生吧，其实他就是由NSObject的<code>doesNotRecognizeSelector:</code>方法抛出的，说明消息的接收者无法响应该方法，从而转发给NSObject类来处理<br>其实消息的转发可以分别三大阶段：<br><code>第一阶段</code> 先征询消息接收者所属的类，看其是否能动态添加方法，以处理当前这个无法响应的 selector，这叫做 动态方法解析（dynamic method resolution）。如果运行期系统（runtime system） 第一阶段执行结束，接收者就无法再以动态新增方法的手段来响应消息，进入第二阶段。<br><code>第二阶段</code> 看看有没有其他对象（备援接收者，replacement receiver）能处理此消息。如果有，运行期系统会把消息转发给那个对象，转发过程结束；如果没有，则启动完整的消息转发机制。<br><code>第三阶段</code> 完整的消息转发机制。运行期系统会把与消息有关的全部细节都封装到 NSInvocation 对象中，再给接收者最后一次机会，令其设法解决当前还未处理的消息。
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/04/02/消息转发/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 </div>
       <footer id="footer">
