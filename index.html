@@ -70,7 +70,7 @@
 						<li>Tags</li>
 						
 						
-						<li>About</li>
+						<li>A propos</li>
 						
 					</ul>
 				</div>
@@ -168,6 +168,65 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-KVO &amp; Delegate &amp; Notification" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/08/18/KVO & Delegate & Notification/" class="article-date">
+  	<time datetime="2016-08-18T06:24:19.000Z" itemprop="datePublished">2016-08-18</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/18/KVO & Delegate & Notification/">KVO &amp; Delegate &amp; Notification</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这段时间在梳理一些内容，发现kvo、delegate、notification这三个可以归为一类。我将他们归为一类的原因主要是：他们都有一个特性经常会把自己的事情交给别人做！虽然说都是大家都是做着同一件事情，但是之前的差别或者说各自的优缺点还是蛮鲜明的。</p>
+<p>在这里我不太想讲，他们各自的实现是怎么用的，主要讲下在如何场景下用比较合适以及我对于各个的看法。</p>
+<p>那么先从简单的说起吧：</p>
+<h3 id="Notfification"><a href="#Notfification" class="headerlink" title="Notfification"></a>Notfification</h3><p>对于我来说，这三种里面，广播（notification）是最早接触到的一个。我记得刚开始接触的时候，用得乐此不疲。因为相对来说，它可以算作是彻彻底底的解耦合的，只需要发广播、监听广播就可以了。但是就是因为彻彻底底的解耦合，导致出现的问题是：对于排查问题的时候很艰难，因为你完全没办法预想到这个广播到底是在哪边接收到的，或者说到底是有多少个地方接收到的。我还记得一开始的时候我底层的网络库的封装全部使用广播的形式。反正后来在做修改的时候是吃尽了苦头，因为每次要找下一步执行到哪里，只能是拿着广播的那个字符串全局搜索…
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/08/18/KVO & Delegate & Notification/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-个人感悟" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -664,62 +723,6 @@
       
         <p class="article-more-link">
           <a  href="/2016/05/07/iOS的widget的总结/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-iOS的urlRoute" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/04/20/iOS的urlRoute/" class="article-date">
-  	<time datetime="2016-04-20T07:23:33.000Z" itemprop="datePublished">2016-04-20</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/20/iOS的urlRoute/">iOS的urlRoute</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>route，路由。这个词在前端中很常见。不过我今天要说的是移动端的route。<br>而是app中的路由，也就是可以成为urlRoute。这个urlRoute主要用于app内页面间的跳转。每个页面的跳转都通过一个特定的url的形式来跳转。<br>其实说了这么多主要是为了介绍一个框架。好吧，先把地址放出来吧（ <a href="https://github.com/campusappcn/iOSUrlRoute">https://github.com/campusappcn/iOSUrlRoute</a> ），以下的urlRoute的内容基本上是围绕着这个框架在讲的。如果满意请大家小手都下star下哈。<br>那么在app内运用urlRoute的形式来跳转有什么好处呢？<br>我觉得最大的好处就是页面间的解耦合。原先我们从A页面跳转到B页面，可以是pushVC或者presentVC，甚至是addSubView。但是不管怎么做你都需要在A页面相关的地方（有个能是在A的VC中，也有可能是在A的ViewModel中）导入B，初始化B之类的一系列操作。我相信这一系列的步骤，大家肯定很熟悉。也许有人可能会差异，难道不是这样做么？或者说这样做有什么不好么？
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/04/20/iOS的urlRoute/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
