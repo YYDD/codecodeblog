@@ -169,6 +169,62 @@
 
       <div class="body-wrap">
   
+    <article id="post-关于应用中的图片所占内存的优化" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/22/关于应用中的图片所占内存的优化/" class="article-date">
+  	<time datetime="2016-06-22T06:23:03.000Z" itemprop="datePublished">2016-06-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/22/关于应用中的图片所占内存的优化/">关于应用中的图片所占内存的优化</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>图片，相信每款app中都有，而且不会少。<br>一个app，所占的内存，图片资源所占去的比例肯定不会小。相信很多同学在加载本地图片资源的时候有时候会不管三七二十一 <code>[UIImage imageNamed:(nonnull NSString *)]</code> 直接是用这个方法来加载图片资源。确实这个方法是比较简单且快速的加载资源的方法。但是大家应该都知道除了<code>[UIImage imageNamed:(nonnull NSString *)]</code>这个方法外，加载图片资源还有另外一个方法。对!就是 <code>[UIImage imageWithContentsOfFile:(nonnull NSString *)]</code>这个方法。那么这两者的区别到底是什么呢？<code>[UIImage imageWithContentsOfFile:(nonnull NSString *)]</code>这个方法加载图片，图片所占的内存不会一直保留着。而<code>[UIImage imageNamed:(nonnull NSString *)]</code>这个方法加载图片，内存会一直保留着，除非手动清除，或者说是app销毁。当然对于一直在内存中的图片，因为不需要进行磁盘的读写，在加载的时候速度肯定是要比从磁盘中读写的图片快很多。
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/06/22/关于应用中的图片所占内存的优化/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-关于jspatch的热更新" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
