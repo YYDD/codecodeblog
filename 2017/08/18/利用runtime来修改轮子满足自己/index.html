@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>利用runtime来修改轮子满足自己 | CodeCode</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="对于开源世界来说，用别人造过的轮子是一件很普遍的事情。而且很多时候在短时间内要写出一个完美的库也并不是一件容易的事情。但是因为业务需求的不同，多多少少会出现需要在别人的库上做一点点小小的修改（当然也可能是很多小小的修改）。对于如何做修改也是有一定讲究的。那么我就以过来人的身份来讲一些我的几点看法吧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用runtime来修改轮子满足自己">
+<meta property="og:url" content="http://yydd.space/2017/08/18/利用runtime来修改轮子满足自己/index.html">
+<meta property="og:site_name" content="CodeCode">
+<meta property="og:description" content="对于开源世界来说，用别人造过的轮子是一件很普遍的事情。而且很多时候在短时间内要写出一个完美的库也并不是一件容易的事情。但是因为业务需求的不同，多多少少会出现需要在别人的库上做一点点小小的修改（当然也可能是很多小小的修改）。对于如何做修改也是有一定讲究的。那么我就以过来人的身份来讲一些我的几点看法吧。">
+<meta property="og:updated_time" content="2017-08-18T03:31:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用runtime来修改轮子满足自己">
+<meta name="twitter:description" content="对于开源世界来说，用别人造过的轮子是一件很普遍的事情。而且很多时候在短时间内要写出一个完美的库也并不是一件容易的事情。但是因为业务需求的不同，多多少少会出现需要在别人的库上做一点点小小的修改（当然也可能是很多小小的修改）。对于如何做修改也是有一定讲究的。那么我就以过来人的身份来讲一些我的几点看法吧。">
+  
+    <link rel="alternative" href="/atom.xml" title="CodeCode" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xrcp9.com1.z0.glb.clouddn.com/blogheadimg.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">YYDD</a></h1>
+		</hgroup>
+
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>Menu</li>
+						<li>Tags</li>
+						
+						
+						<li>About</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/YYDD" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://weibo.com/1875745691/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="#" title="rss">rss</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">一个弱弱的程序员=，=</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">YYDD</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://7xrcp9.com1.z0.glb.clouddn.com/blogheadimg.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">YYDD</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/YYDD" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/1875745691/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="#" title="rss">rss</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-利用runtime来修改轮子满足自己" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/08/18/利用runtime来修改轮子满足自己/" class="article-date">
+  	<time datetime="2017-08-18T03:29:44.000Z" itemprop="datePublished">2017-08-18</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      利用runtime来修改轮子满足自己
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>对于开源世界来说，用别人造过的轮子是一件很普遍的事情。而且很多时候在短时间内要写出一个完美的库也并不是一件容易的事情。但是因为业务需求的不同，多多少少会出现需要在别人的库上做一点点小小的修改（当然也可能是很多小小的修改）。对于如何做修改也是有一定讲究的。<br>那么我就以过来人的身份来讲一些我的几点看法吧。<a id="more"></a></p>
+<h3 id="千万不要随意改动库的源码"><a href="#千万不要随意改动库的源码" class="headerlink" title="千万不要随意改动库的源码"></a>千万不要随意改动库的源码</h3><p>这一点，是我一直抵触的！我也会对同事说不要随意改动库的代码。一来是尊重原创者，毕竟作者开源出来，也是经过一番精雕细琢，要尊重他人的“血汗”。二来，也是最主要的一点，如果直接改动原库的代码，那么下次作者更新的时候，你想要更新库就会“捉瞎”，完全不知道当时自己改动了哪些地方，无法再更新后的库中保持和原有一致的逻辑。也许也有人会觉得，现在的功能已经可以满足我了，并不需要再更新。但是你不要忘记，开源的世界，大家都在使用，会有很多人提一些优秀的意见和建议，来帮助一起优化、改进。当你看到有<code>修改bug</code>、<code>优化性能</code>这样的<code>commit</code>的时候，难道不心动去更新么。所以切记不要随意动作者的源码。在ios中<code>cocoapod</code>这个第三方托管，很好的避免了这一点，当你想要修改源码的时候都会有提醒代码已经被锁定。</p>
+<h3 id="category（扩展类）"><a href="#category（扩展类）" class="headerlink" title="category（扩展类）"></a>category（扩展类）</h3><p><blockquote><br>You use categories to define additional methods of an existing class—even one whose source code is unavailable to you—without subclassing. You typically use a category to add methods to an existing class, such as one defined in the Cocoa frameworks. The added methods are inherited by subclasses and are indistinguishable at runtime from the original methods of the class.<br></blockquote><br>以上这段话是苹果官方文档对于category的解释。</p>
+<p>其实对于想要修改别人的源码来满足需求的时候，就应该如上述所说把源码认为是不可变。那么如何使用category来满足需求呢，下面举个例子来了解下。</p>
+<p>就拿iOS中的图片缓存库<code>SDWebImage</code>来说，</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Set the imageView `image` with an `url` and a placeholder.</span><br><span class="line"> *</span><br><span class="line"> * The download is asynchronous and cached.</span><br><span class="line"> *</span><br><span class="line"> * @param url         The url for the image.</span><br><span class="line"> * @param placeholder The image to be set initially, until the image request finishes.</span><br><span class="line"> * @see sd_setImageWithURL:placeholderImage:options:</span><br><span class="line"> */</span></span><br><span class="line">- (<span class="keyword">void</span>)sd_setImageWithURL:(<span class="built_in">NSURL</span> *)url placeholderImage:(<span class="built_in">UIImage</span> *)placeholder;</span><br></pre></td></tr></table></figure>
+<p>上面这个方法是用来加载网络图片的，其中<code>placeholder</code>是默认占位图，现在有一个需求对于全局的图片都使用同一张的占位图。那么这个时候如果每次都使用上面的方法来实现真是一个大大的体力活。这个时候可以用category来额外多加一个方法，直接在方法的实现中再调用上面的加载图片的方法。这样做即节省了“体力”，还方便做默认图片的修改。而且别人阅读代码也是一目了然。</p>
+<h3 id="Method-Swizzle"><a href="#Method-Swizzle" class="headerlink" title="Method Swizzle"></a>Method Swizzle</h3><p>method swizzle是一种黑魔法，方法替换，主要是hook原有的方法。既然可以hook原有的方法，那就会有很多事情可以做。一个类只要暴露了方法，就可以hook。</p>
+<p>具体例子还是拿<code>SDWebImage</code>来说。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Set the imageView `image` with an `url` and a placeholder.</span><br><span class="line"> *</span><br><span class="line"> * The download is asynchronous and cached.</span><br><span class="line"> *</span><br><span class="line"> * @param url         The url for the image.</span><br><span class="line"> * @param placeholder The image to be set initially, until the image request finishes.</span><br><span class="line"> * @see sd_setImageWithURL:placeholderImage:options:</span><br><span class="line"> */</span></span><br><span class="line">- (<span class="keyword">void</span>)sd_setImageWithURL:(<span class="built_in">NSURL</span> *)url placeholderImage:(<span class="built_in">UIImage</span> *)placeholder;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Set the imageView `image` with an `url`, placeholder and custom options.</span><br><span class="line"> *</span><br><span class="line"> * The download is asynchronous and cached.</span><br><span class="line"> *</span><br><span class="line"> * @param url            The url for the image.</span><br><span class="line"> * @param placeholder    The image to be set initially, until the image request finishes.</span><br><span class="line"> * @param options        The options to use when downloading the image. @see SDWebImageOptions for the possible values.</span><br><span class="line"> * @param completedBlock A block called when operation has been completed. This block has no return value</span><br><span class="line"> *                       and takes the requested UIImage as first parameter. In case of error the image parameter</span><br><span class="line"> *                       is nil and the second parameter may contain an NSError. The third parameter is a Boolean</span><br><span class="line"> *                       indicating if the image was retrieved from the local cache or from the network.</span><br><span class="line"> *                       The fourth parameter is the original image url.</span><br><span class="line"> */</span></span><br><span class="line">- (<span class="keyword">void</span>)sd_setImageWithURL:(<span class="built_in">NSURL</span> *)url placeholderImage:(<span class="built_in">UIImage</span> *)placeholder options:(SDWebImageOptions)options completed:(SDWebImageCompletionBlock)completedBlock;</span><br></pre></td></tr></table></figure>
+<p>看上面两个方法，第一个方法是比较常见的加载网络图片的用法，通过<code>SDWebImage</code>的实现可以知道第一个方法最终会传递实现第二个方法，而options则是一个图片的加载规则，默认的是下载一次失败之后就不再下载，如果说我们想在项目中全局修改这个属性，想下载失败了之后还是要继续下载，直到显示出来，怎么办呢。当然最简单的方法就是改源代码。这个之前也已经提过了，是最最最不可取的方法。其实这个时候可以用method swizzle就可以达到效果。其中hook的是<code>- (void)sd_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options completed:(SDWebImageCompletionBlock)completedBlock;</code>方法。</p>
+<p>具体实现如下面代码。<br>特别要注意的是在交换的方法内，想要在执行原有的方法，继续调用本方法。可以细细品味下因为方法替换了~</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+(<span class="keyword">void</span>)load</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//交换方法</span></span><br><span class="line">    SEL originalSelector = <span class="keyword">@selector</span>(sd_setImageWithURL:placeholderImage:options:progress:completed:);</span><br><span class="line">    SEL swizzleSelector = <span class="keyword">@selector</span>(trick_setImageWithURL:placeholderImage:options:progress:completed:);</span><br><span class="line">    </span><br><span class="line">    Method originalMethod = class_getInstanceMethod([<span class="keyword">self</span> class], originalSelector);</span><br><span class="line">    Method swizzleMethod = class_getInstanceMethod([<span class="keyword">self</span> class], swizzleSelector);</span><br><span class="line">    </span><br><span class="line">    method_exchangeImplementations(originalMethod, swizzleMethod);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)trick_setImageWithURL:(<span class="built_in">NSURL</span> *)url placeholderImage:(<span class="built_in">UIImage</span> *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock</span><br><span class="line">&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (options == <span class="number">0</span>) &#123;</span><br><span class="line">        options = SDWebImageRetryFailed | SDWebImageLowPriority;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//执行原有方法</span></span><br><span class="line">    [<span class="keyword">self</span> trick_setImageWithURL:url placeholderImage:placeholder options:options progress:progressBlock completed:^(<span class="built_in">UIImage</span> *image, <span class="built_in">NSError</span> *error, SDImageCacheType cacheType, <span class="built_in">NSURL</span> *imageURL) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (completedBlock) &#123;</span><br><span class="line">            completedBlock(image,error,cacheType,imageURL);</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="KVO"><a href="#KVO" class="headerlink" title="KVO"></a>KVO</h3><p>KVO全称:(Key-value observing）键值观察。相比较而言我比较喜欢叫监听。但是有一点必须了解的是:使用KVO的要求是对象必须能支持kvc机制——所有NSObject的子类都支持这个机制。<br>所谓监听，就是某个属性或者值改变的时候给反馈。最常接触的就是<code>wkwebview</code>的进度条，通过监听<code>estimatedProgress</code>的值来改变进度条状态。</p>
+<p>在之前的项目中，就有这样一个需求，使用了某个第三方库，还是个静态库(.a)，但是对于UI的定制化又比较高，对于库给出的配置方法、暴露的属性已经远远不能满足了。因为是静态库，源码看不到，连修改源码这条路都走不通。</p>
+<p>然而这个时候可通过监听来做一些调整。</p>
+<p>有这么一个case，库中有的viewA在一定条件下触发，然后通过动画显示出来的，但是最终定格的位置和我们实际的位置有所偏差，这个时候可以用kvo，监听viewA的frame变化，获取新值的时候做修改来符合要求。但是要注意的是在修改时候还会触发kvo，所以在修改的方法内要做一点trick，如果已经和预期的一致了，则不再修改。不然则无限调用了。通过类似的方法，在项目中完全实现了UI定制化。</p>
+<p>以上主要介绍了三种方法来帮助更好的使用别人的轮子，其实远远不止这些。也许有人会说这样做有点杀鸡用牛刀的感觉，但是虽然可能在一开始改动的时候确实麻烦了一些，但是这个是为了方便以后的更替，其实这么做还是为了保持了“千万不要随意去改动库的源码”的原则。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/06/29/weex学习（一）/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">weex学习（一）</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">Share to: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="利用runtime来修改轮子满足自己" data-title="利用runtime来修改轮子满足自己" data-url="http://yydd.space/2017/08/18/利用runtime来修改轮子满足自己/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 YYDD
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_page_pv">
+  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+</footer>
+
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
